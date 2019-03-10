@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>aws-lambda-iot</groupId>
-    <artifactId>bartender</artifactId>
+    <groupId>aws-lambda-workshop</groupId>
+    <artifactId>register-client</artifactId>
     <packaging>jar</packaging>
-    <version>dev</version>
-    <name>bartender</name>
+    <version>1.0.0</version>
+    <name>register-client</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
