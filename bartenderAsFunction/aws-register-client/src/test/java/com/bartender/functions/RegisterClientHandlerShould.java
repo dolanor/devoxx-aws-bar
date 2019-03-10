@@ -1,6 +1,5 @@
 package com.bartender.functions;
 
-
 import com.bartender.model.ApiGatewayResponse;
 import org.junit.jupiter.api.Test;
 
