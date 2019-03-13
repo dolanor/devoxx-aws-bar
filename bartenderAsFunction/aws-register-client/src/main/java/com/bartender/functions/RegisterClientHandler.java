@@ -4,7 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.RegisterClientRepositoryImpl;
 import com.bartender.model.ApiGatewayResponse;
-import com.bartender.model.DrunkClient;
+import com.bartender.model.DrunkClientResponse;
 import com.bartender.service.RegisterClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,10 +23,10 @@ public class RegisterClientHandler implements RequestHandler<Map<String, Object>
     public ApiGatewayResponse handleRequest(Map<String, Object> input, Context context) {
         LOG.info("received: {}", input);
         try {
-            DrunkClient drunkClient = service.handleInput(input);
+            DrunkClientResponse drunkClientResponse = service.handleInput(input);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
-                    .setObjectBody(drunkClient)
+                    .setObjectBody(drunkClientResponse)
                     .build();
         } catch (Exception ex) {
             LOG.error("Error registering client", ex);

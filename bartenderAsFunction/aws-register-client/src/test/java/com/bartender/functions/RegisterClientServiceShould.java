@@ -1,7 +1,7 @@
 package com.bartender.functions;
 
 import com.bartender.dao.RegisterClientRepository;
-import com.bartender.model.DrunkClient;
+import com.bartender.model.DrunkClientResponse;
 import com.bartender.service.RegisterClientService;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 class RegisterClientServiceShould implements JsonTools {
-    private RegisterClientRepository registerClientRepository = spy(RegisterClientRepository.class);
+    private RegisterClientRepository registerClientRepository = mock(RegisterClientRepository.class);
     private RegisterClientService registerClientService = new RegisterClientService(
             registerClientRepository
     );
@@ -24,13 +24,17 @@ class RegisterClientServiceShould implements JsonTools {
     void return_same_id_if_specified() {
         // Given
         Map<String, Object> input = new HashMap<>();
-        input.put("id", UUID.randomUUID().toString());
+        final String id = UUID.randomUUID().toString();
+        input.put("id", id);
 
         // When
-        doNothing().when(registerClientRepository).registerNewDevice(any());
-        DrunkClient drunkClient = registerClientService.handleInput(input);
+        final DrunkClientResponse response = mock(DrunkClientResponse.class);
+        when(response.getIdClient()).thenReturn(id);
+        when(registerClientRepository.registerNewDevice(any())).thenReturn(response);
+        DrunkClientResponse drunkClientResponse = registerClientService.handleInput(input);
 
         // Then
-        assertThat(drunkClient.getId()).isNotNull();
+        assertThat(drunkClientResponse.getIdClient()).isEqualTo(id);
     }
+
 }
