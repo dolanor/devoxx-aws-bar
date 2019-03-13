@@ -9,9 +9,9 @@ Resources:
   LambdaRegisterClient:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: bin/registerClient
+      Handler: com.bartender.functions.RegisterClientHandler::handleRequest
       Timeout: 10
-      Runtime: go1.x
+      Runtime: java8
       CodeUri:
         Bucket: handsonbartender
         Key: !Sub ${User}/registerClient.zip
