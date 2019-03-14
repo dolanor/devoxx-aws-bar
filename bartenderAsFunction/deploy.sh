@@ -29,6 +29,7 @@ aws cloudformation deploy \
   --stack-name $P_USER-bartender-sam-deploy \
   --parameter-overrides User=$P_USER \
   --capabilities CAPABILITY_IAM \
+  --region eu-west-1 \
   --profile epf
 
 # rm bin/*.jar

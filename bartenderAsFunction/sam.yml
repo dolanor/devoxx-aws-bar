@@ -14,7 +14,7 @@ Resources:
       Runtime: java8
       CodeUri:
         Bucket: handsonbartender
-        Key: !Sub ${User}/registerClient.zip
+        Key: !Sub ${User}/register-client.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -43,29 +43,7 @@ Resources:
         schemes:
           - "https"
         paths:
-          /command:
-            get:
-              summary: Get unattended commands
-              operationId: CommandsGet
-              consumes:
-              - application/json
-              produces:
-              - application/json
-              responses:
-                '200':
-                  description: "200 response"
-                  schema:
-                    $ref: "#/definitions/Command"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaGetCommands.Arn}/invocations"
-                passthroughBehavior: "when_no_match"
-                httpMethod: "POST"
-                contentHandling: "CONVERT_TO_TEXT"
-                type: "aws_proxy"
+
           /client:
             post:
               tags:
@@ -104,33 +82,7 @@ Resources:
                 httpMethod: "POST"
                 contentHandling: "CONVERT_TO_TEXT"
                 type: "aws_proxy"
-          /client/{idClient}/close:
-            post:
-              summary: close the bar for a client
-              operationId: ClientPost
-              consumes:
-              - application/json
-              produces:
-              - application/json
-              parameters:
-              - in: path
-                name: idClient
-                required: true
-                description: The id of the client.
-                type: string
-              responses:
-                '200':
-                  description: "200 response"
-              x-amazon-apigateway-integration:
-                responses:
-                  default:
-                    statusCode: "200"
-                uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaStatusBar.Arn}/invocations"
-                passthroughBehavior: "when_no_match"
-                httpMethod: "POST"
-                contentHandling: "CONVERT_TO_TEXT"
-                type: "aws_proxy"
+
         definitions:
           Client:
             type: object
