@@ -1,6 +1,5 @@
 package com.bartender.dao;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.amazon.awssdk.regions.Region;
@@ -8,6 +7,7 @@ import software.amazon.awssdk.services.iot.IotClient;
 import software.amazon.awssdk.services.iot.model.*;
 
 import com.bartender.model.DrunkClientResponse;
+import software.amazon.awssdk.utils.StringUtils;
 
 /**
  * Some examples are specified here
@@ -68,7 +68,7 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
 
     public AttachThingPrincipalResponse attachThingPrincipal(DrunkClientResponse response, IotClient client) {
         LOG.info("attachThingPrincipal for client {}", response.getIdClient());
-        if (StringUtils.isNotEmpty(response.getCertificateArn())) {
+        if (StringUtils.isNotBlank(response.getCertificateArn())) {
             final AttachThingPrincipalRequest request = AttachThingPrincipalRequest.builder()
                 .thingName(response.getIdClient())
                 .principal(response.getCertificateArn())
