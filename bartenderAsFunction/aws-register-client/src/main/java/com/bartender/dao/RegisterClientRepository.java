@@ -8,6 +8,7 @@ import software.amazon.awssdk.services.iot.model.CreateKeysAndCertificateRespons
 import software.amazon.awssdk.services.iot.model.CreateThingResponse;
 
 public interface RegisterClientRepository {
+
     DrunkClientResponse registerNewDevice(String clientId);
 
     CreateKeysAndCertificateResponse createKeysAndCertificate(String clientId, IotClient client);
