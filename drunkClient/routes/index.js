@@ -4,7 +4,7 @@ var awsIot = require('aws-iot-device-sdk');
 var Request = require("request");
 const fs = require('fs');
 
-const idThing = "USER2"
+const idThing = "user1"
 
 /* GET home page. */
 
