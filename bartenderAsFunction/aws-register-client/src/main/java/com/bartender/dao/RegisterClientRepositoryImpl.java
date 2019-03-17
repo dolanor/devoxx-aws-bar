@@ -80,7 +80,7 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
 
     private IotClient newClient() {
         return IotClient.builder()
-                .region(Region.EU_WEST_3)
+                .region(Region.EU_WEST_1)
                 .build();
     }
 }
