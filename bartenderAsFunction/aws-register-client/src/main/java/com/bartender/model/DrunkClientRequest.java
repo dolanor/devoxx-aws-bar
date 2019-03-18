@@ -1,8 +1,9 @@
 package com.bartender.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class DrunkClientRequest {
+public class DrunkClientRequest implements Serializable {
     private String id;
 
     public String getId() {
@@ -13,6 +14,8 @@ public class DrunkClientRequest {
         this.id = id;
         return this;
     }
+
+    public DrunkClientRequest() { }
 
     @Override
     public boolean equals(Object o) {

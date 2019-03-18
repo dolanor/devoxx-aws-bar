@@ -27,7 +27,7 @@ public class RegisterClientHandler implements RequestHandler<DrunkClientRequest,
                     .setStatusCode(200)
                     .setObjectBody(drunkClientResponse)
                     .build();
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             LOG.error("Error registering client", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(400)

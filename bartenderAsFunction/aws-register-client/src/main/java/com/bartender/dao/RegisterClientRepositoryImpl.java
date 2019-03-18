@@ -21,9 +21,10 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
 
     @Override
     public DrunkClientResponse registerNewDevice(String clientId) {
-        LOG.info("registering a new client with id " + clientId);
+        LOG.info("registering a new client with id {}", clientId);
         try (IotClient client = newClient()) {
             final CreateKeysAndCertificateResponse keysAndCertificate = createKeysAndCertificate(clientId, client);
+            LOG.info("after keys {}", keysAndCertificate);
             DrunkClientResponse response = buildDrunkClientResponse(keysAndCertificate, clientId);
             createThing(response, client);
             attachPolicy(response, client);
@@ -46,7 +47,9 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
     public CreateKeysAndCertificateResponse createKeysAndCertificate(String clientId, IotClient client) {
         LOG.info("CreateKeysAndCertificate for client {}", clientId);
         final CreateKeysAndCertificateRequest createReq =
-                CreateKeysAndCertificateRequest.builder().setAsActive(true).build();
+                CreateKeysAndCertificateRequest.builder()
+                        .setAsActive(true)
+                        .build();
         return client.createKeysAndCertificate(createReq);
     }
 
