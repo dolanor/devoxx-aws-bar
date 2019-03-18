@@ -21,6 +21,7 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
 
     @Override
     public DrunkClientResponse registerNewDevice(String clientId) {
+        LOG.info("registering a new client with id " + clientId);
         try (IotClient client = newClient()) {
             final CreateKeysAndCertificateResponse keysAndCertificate = createKeysAndCertificate(clientId, client);
             DrunkClientResponse response = buildDrunkClientResponse(keysAndCertificate, clientId);

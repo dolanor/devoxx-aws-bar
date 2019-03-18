@@ -4,14 +4,13 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.RegisterClientRepositoryImpl;
 import com.bartender.model.ApiGatewayResponse;
+import com.bartender.model.DrunkClientRequest;
 import com.bartender.model.DrunkClientResponse;
 import com.bartender.service.RegisterClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
-
-public class RegisterClientHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
+public class RegisterClientHandler implements RequestHandler<DrunkClientRequest, ApiGatewayResponse> {
 
     private static final Logger LOG = LogManager.getLogger(RegisterClientHandler.class);
 
@@ -20,7 +19,7 @@ public class RegisterClientHandler implements RequestHandler<Map<String, Object>
     );
 
     @Override
-    public ApiGatewayResponse handleRequest(Map<String, Object> input, Context context) {
+    public ApiGatewayResponse handleRequest(DrunkClientRequest input, Context context) {
         LOG.info("received: {}", input);
         try {
             DrunkClientResponse drunkClientResponse = service.handleInput(input);

@@ -3,12 +3,10 @@ package com.bartender.service;
 import com.bartender.dao.RegisterClientRepository;
 import com.bartender.model.DrunkClientResponse;
 import com.bartender.model.DrunkClientRequest;
-import com.bartender.model.Json;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.amazon.awssdk.utils.StringUtils;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class RegisterClientService {
@@ -21,8 +19,7 @@ public class RegisterClientService {
         this.registerClientRepository = registerClientRepository;
     }
 
-    public DrunkClientResponse handleInput(Map<String, Object> input) {
-        DrunkClientRequest drunkClient = Json.serializer().mapOrError(input, DrunkClientRequest.class);
+    public DrunkClientResponse handleInput(DrunkClientRequest drunkClient) {
         LOG.info("Got {} in Register Client", drunkClient);
 
         String id = StringUtils.isEmpty(drunkClient.getId())

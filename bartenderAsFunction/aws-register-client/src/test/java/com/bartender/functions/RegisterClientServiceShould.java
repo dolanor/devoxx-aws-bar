@@ -1,7 +1,9 @@
 package com.bartender.functions;
 
 import com.bartender.dao.RegisterClientRepository;
+import com.bartender.model.DrunkClientRequest;
 import com.bartender.model.DrunkClientResponse;
+import com.bartender.model.Json;
 import com.bartender.service.RegisterClientService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -21,29 +23,43 @@ class RegisterClientServiceShould implements JsonTools {
     );
 
     @Test
-    void return_same_id_if_specified() {
+    void map_attributes_to_json() {
         // Given
         Map<String, Object> input = new HashMap<>();
         final String givenId = UUID.randomUUID().toString();
         input.put("id", givenId);
 
         // When
+        DrunkClientRequest drunkClient = Json.serializer().mapOrError(input, DrunkClientRequest.class);
+
+        // Then
+        assertThat(drunkClient.getId()).isEqualTo(givenId);
+    }
+
+    @Test
+    void return_same_id_if_specified() {
+        // Given
+        final String givenId = UUID.randomUUID().toString();
+        final DrunkClientRequest drunkClient = new DrunkClientRequest().setId(givenId);
+
+        // When
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-        DrunkClientResponse ignoredResponse = registerClientService.handleInput(input);
+        DrunkClientResponse ignoredResponse = registerClientService.handleInput(drunkClient);
         verify(registerClientRepository, times(1)).registerNewDevice(stringCaptor.capture());
 
         // Then
         assertThat(stringCaptor.getValue()).isEqualTo(givenId);
     }
-    
+
     @Test
     void return_new_id_when_none_specified() {
         // Given
         Map<String, Object> input = new HashMap<>();
+        final DrunkClientRequest drunkClient = new DrunkClientRequest();
 
         // When
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-        DrunkClientResponse ignoredResponse = registerClientService.handleInput(input);
+        DrunkClientResponse ignoredResponse = registerClientService.handleInput(drunkClient);
         verify(registerClientRepository, times(1)).registerNewDevice(stringCaptor.capture());
 
         // Then
