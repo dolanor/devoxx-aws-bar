@@ -3,14 +3,12 @@ package com.bartender.functions;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.RegisterClientRepositoryImpl;
-import com.bartender.model.ApiGatewayResponse;
-import com.bartender.model.DrunkClientRequest;
-import com.bartender.model.DrunkClientResponse;
+import com.bartender.model.*;
 import com.bartender.service.RegisterClientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RegisterClientHandler implements RequestHandler<DrunkClientRequest, ApiGatewayResponse> {
+public class RegisterClientHandler implements RequestHandler<ApiGatewayRequest, ApiGatewayResponse> {
 
     private static final Logger LOG = LogManager.getLogger(RegisterClientHandler.class);
 
@@ -19,10 +17,11 @@ public class RegisterClientHandler implements RequestHandler<DrunkClientRequest,
     );
 
     @Override
-    public ApiGatewayResponse handleRequest(DrunkClientRequest input, Context context) {
+    public ApiGatewayResponse handleRequest(ApiGatewayRequest input, Context context) {
         LOG.info("received: {}", input);
         try {
-            DrunkClientResponse drunkClientResponse = service.handleInput(input);
+            DrunkClientRequest request = Json.instance().parse(input.getBody(), DrunkClientRequest.class);
+            DrunkClientResponse drunkClientResponse = service.handleInput(request);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
                     .setObjectBody(drunkClientResponse)

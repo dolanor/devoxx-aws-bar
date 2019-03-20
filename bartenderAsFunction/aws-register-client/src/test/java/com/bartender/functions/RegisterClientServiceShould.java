@@ -30,10 +30,24 @@ class RegisterClientServiceShould implements JsonTools {
         input.put("id", givenId);
 
         // When
-        DrunkClientRequest drunkClient = Json.serializer().mapOrError(input, DrunkClientRequest.class);
+        DrunkClientRequest drunkClient = Json.instance().mapOrError(input, DrunkClientRequest.class);
 
         // Then
         assertThat(drunkClient.getId()).isEqualTo(givenId);
+    }
+
+    @Test
+    void transform_json_to_map() {
+        // Given
+        String json=
+                "{" +
+                "\"id\": \"123\"" +
+                "}";
+        // When
+        final Map<String, Object> result = Json.instance().toMap(json);
+
+        // Then
+        assertThat(result.get("id")).isEqualTo("123");
     }
 
     @Test

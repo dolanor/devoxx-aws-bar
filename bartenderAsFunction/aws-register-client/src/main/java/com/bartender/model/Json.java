@@ -33,7 +33,7 @@ public class Json {
         DEFAULT_SERIALIZER = new Json(mapper);
     }
 
-    public static Json serializer() {
+    public static Json instance() {
         return DEFAULT_SERIALIZER;
     }
 
@@ -59,6 +59,10 @@ public class Json {
         } catch (IOException e) {
             return new HashMap<>();
         }
+    }
+
+    public <T> T parse(String json, Class<T> clazz) {
+        return mapOrError(Json.instance().toMap(json), clazz);
     }
 
     private static class JsonException extends RuntimeException {
