@@ -23,6 +23,7 @@ function addCommand(event) {
         dataType: 'JSON'
     }).done(function (response) {
         // Check for successful (blank) response
+        console.log(`Front::addCommand ${response}`)
         if (response.msg === '') {
             console.log("OK")
         }
@@ -42,6 +43,7 @@ function registerToURL(event) {
         dataType: 'JSON'
     }).done(function (response) {
         // Check for successful (blank) response
+        console.log(`Front::registerToURL: ${response}`)
         if (response.msg === '') {
             console.log("registered OK")
         }
