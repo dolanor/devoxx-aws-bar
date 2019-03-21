@@ -5,10 +5,7 @@ import com.bartender.model.CommandResponse;
 import software.amazon.awssdk.regions.Region;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
-
-import java.util.HashMap;
 
 /**
  * Some examples are specified here
@@ -22,8 +19,8 @@ public class ReadCommandFoodRepositoryImpl implements ReadCommandFoodRepository 
     public CommandResponse saveCommand(Command command) {
         try (DynamoDbClient dynamoDB = newConnection()) {
             PutItemRequest request =  PutItemRequest.builder()
-                    .item(marshalCommand(command))
-                    .tableName(tableName)
+                    .item(command.marshal()) // TODO 02. marshall the command
+                    .tableName(tableName) // TODO 02. use the table name got as an ENV variable
                     .build();
             dynamoDB.putItem(request);
             return CommandResponse.builder()
@@ -32,18 +29,9 @@ public class ReadCommandFoodRepositoryImpl implements ReadCommandFoodRepository 
         }
     }
 
-    private HashMap<String, AttributeValue> marshalCommand(Command command) {
-        final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("IdCommand", AttributeValue.builder().s(command.getIdCommand()).build());
-        map.put("DateCommand", AttributeValue.builder().s(command.getDateCommand()).build());
-        map.put("Client", AttributeValue.builder().s(command.getClient()).build());
-        // TODO: add missing fields
-        return map;
-    }
-
     private DynamoDbClient newConnection() {
         return DynamoDbClient.builder()
-                .region(Region.US_WEST_1)
+                .region(Region.EU_WEST_1)
                 .build();
     }
 }

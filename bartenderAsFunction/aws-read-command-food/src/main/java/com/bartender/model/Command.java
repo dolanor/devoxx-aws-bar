@@ -1,6 +1,11 @@
 package com.bartender.model;
 
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Command {
     private String idCommand;
@@ -11,6 +16,20 @@ public class Command {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Map<String, AttributeValue> marshal() {
+        final HashMap<String, AttributeValue> map = new HashMap<>();
+        map.put("IdCommand", AttributeValue.builder().s(this.getIdCommand()).build());
+        map.put("DateCommand", AttributeValue.builder().s(this.getDateCommand()).build());
+        map.put("Client", AttributeValue.builder().s(this.getClient()).build());
+        Optional.ofNullable(food).ifPresent(actualFood ->
+                map.put("Food", AttributeValue.builder().m(actualFood.marshal()).build())
+        );
+        Optional.ofNullable(beer).ifPresent(actualBeer ->
+                map.put("Beer", AttributeValue.builder().m(actualBeer.marshal()).build())
+        );
+        return map;
     }
 
     public static class Builder {

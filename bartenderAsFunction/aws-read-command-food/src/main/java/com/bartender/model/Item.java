@@ -1,11 +1,23 @@
 package com.bartender.model;
 
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Item {
     private String name;
     private int amount;
     private boolean served;
+
+    Map<String, AttributeValue> marshal() {
+        final HashMap<String, AttributeValue> map = new HashMap<>();
+        map.put("Name", AttributeValue.builder().s(this.getName()).build());
+        map.put("Amount", AttributeValue.builder().s(String.valueOf(this.getAmount())).build());
+        map.put("Served", AttributeValue.builder().bool(this.isServed()).build());
+        return map;
+    }
 
     public String getName() {
         return name;

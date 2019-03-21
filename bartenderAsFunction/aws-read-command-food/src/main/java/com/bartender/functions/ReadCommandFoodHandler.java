@@ -4,14 +4,13 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.ReadCommandFoodRepositoryImpl;
 import com.bartender.model.ApiGatewayResponse;
+import com.bartender.model.CommandRequest;
 import com.bartender.model.CommandResponse;
 import com.bartender.service.ReadCommandFoodService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
-
-public class ReadCommandFoodHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
+public class ReadCommandFoodHandler implements RequestHandler<CommandRequest, ApiGatewayResponse> {
 
     private static final Logger LOG = LogManager.getLogger(ReadCommandFoodHandler.class);
 
@@ -20,16 +19,16 @@ public class ReadCommandFoodHandler implements RequestHandler<Map<String, Object
     );
 
     @Override
-    public ApiGatewayResponse handleRequest(Map<String, Object> input, Context context) {
-        LOG.info("received: {}", input);
+    public ApiGatewayResponse handleRequest(CommandRequest commandRequest, Context context) {
+        LOG.info("received: {}", commandRequest);
         try {
-            CommandResponse commandResponse = service.handleInput(input);
+            CommandResponse commandResponse = service.handleInput(commandRequest);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
                     .setObjectBody(commandResponse)
                     .build();
         } catch (Exception ex) {
-            LOG.error("Error registering client", ex);
+            LOG.error("Error reading command food", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(400)
                     .setObjectBody(ex)
