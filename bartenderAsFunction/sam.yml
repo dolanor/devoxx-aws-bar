@@ -30,6 +30,32 @@ Resources:
       Environment:
         Variables:
           POLICY_DRUNK_CLIENT: !Ref PolicyDrunkClient
+  LambdaRuleReadCommandFood:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.bartender.functions.ReadCommandFoodHandler::handleRequest
+      Timeout: 10
+      Runtime: java8
+      MemorySize: 512
+      CodeUri:
+        Bucket: handsonbartender
+        Key: !Sub ${User}/read-command-food.jar
+      Policies:
+      - AWSIoTThingsRegistration
+      - AWSIoTConfigAccess
+      - AWSIoTDataAccess
+      - DynamoDBCrudPolicy:
+          TableName: !Sub ${User}-Command
+      Environment:
+        Variables:
+          TABLE_COMMANDS: !Sub ${User}-Command
+      Events:
+        EventCommandReception:
+          Type: IoTRule
+          Name: IotRuleCommandFoodReception
+          Properties:
+            AwsIotSqlVersion: "2016-03-23"
+            Sql: "SELECT *,topic(2) as client FROM 'topics/+/topic_drunk' where food.amount > 0"
   Bartender:
     Type: AWS::Serverless::Api
     Properties:
