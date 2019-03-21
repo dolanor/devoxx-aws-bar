@@ -7,24 +7,24 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Item {
-    private String name;
+    private String item;
     private int amount;
     private boolean served;
 
     Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("Name", AttributeValue.builder().s(this.getName()).build());
+        map.put("Name", AttributeValue.builder().s(this.getItem()).build());
         map.put("Amount", AttributeValue.builder().s(String.valueOf(this.getAmount())).build());
         map.put("Served", AttributeValue.builder().bool(this.isServed()).build());
         return map;
     }
 
-    public String getName() {
-        return name;
+    public String getItem() {
+        return item;
     }
 
-    public Item setName(String name) {
-        this.name = name;
+    public Item setItem(String item) {
+        this.item = item;
         return this;
     }
 
@@ -53,18 +53,18 @@ public class Item {
         Item item = (Item) o;
         return amount == item.amount &&
                 served == item.served &&
-                Objects.equals(name, item.name);
+                Objects.equals(item, item.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, amount, served);
+        return Objects.hash(item, amount, served);
     }
 
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + name + '\'' +
+                "item='" + item + '\'' +
                 ", amount=" + amount +
                 ", served=" + served +
                 '}';
