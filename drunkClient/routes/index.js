@@ -73,18 +73,26 @@ router.post('/registerApi', function (req, res) {
 router.post('/addCommand', function (req, res) {
     var data = req.body
     console.log("==== Calling /addCommand", data)
-    const device = awsIot.device({
-        keyPath: './mything-private.pem.key',
-        certPath: "./mything-certificate.pem.crt",
-        caPath: "./AmazonRootCA1.pem",
-        //TODO change
-        clientId: idThing,
-        //TODO change
-        host: "HOST"
-    });
-    let topicName="topics/"+idThing+"/topic_drunk"
-    device.publish(topicName, JSON.stringify(data));
-    res.send({msg: ''});
+    try {
+      // TODO 02. Name the topic according to sam.yml
+      const topicName = `topics/${idThing}/topic_drunk`
+
+      //TODO 02. specify the certificates you just downloaded
+      const device = awsIot.device({
+          keyPath: './mything-private.pem.key',
+          certPath: "./mything-certificate.pem.crt",
+          caPath: "./AmazonRootCA1.pem",
+          clientId: idThing,
+          //TODO 02. Specify the MQTT url (AWS console / AWS iot / settings / Endpoint)
+          host: "HOST"
+      });
+      device.publish(topicName, JSON.stringify(data));
+      res.send({ msg: '' });
+    }
+    catch (err) {
+      console.error(err);
+      res.status(404).send(`Sorry, we got ${error}!`);
+    }
 });
 
 module.exports = router;
