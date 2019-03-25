@@ -1,41 +1,50 @@
 package com.bartender.functions;
 
-import com.bartender.dao.ReadCommandFoodRepository;
-import com.bartender.model.CommandResponse;
+import com.bartender.model.Command;
 import com.bartender.model.Item;
-import com.bartender.service.ReadCommandFoodService;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.mock;
 
 class ReadCommandFoodServiceShould implements JsonTools {
-    private ReadCommandFoodRepository readCommandFoodRepository = mock(ReadCommandFoodRepository.class);
-    private ReadCommandFoodService readCommandFoodService = new ReadCommandFoodService(
-            readCommandFoodRepository
-    );
 
     @Test
-    void verify_something() {
+    void verify_food_is_marshaled() {
         // Given
         Item item = new Item()
                 .setItem("burger")
                 .setAmount(4)
                 .setServed(false);
 
-        // When - CommandRequest
-        final Map<String, AttributeValue> marshalled = item.marshal();
+        assertThat(item.marshal()).containsKeys("item", "amount", "served");
+    }
 
-        System.out.println(marshalled);
-        assertThat(marshalled).containsKeys("item", "amount", "served");
+    @Test
+    void verify_command_is_marshaled() {
+        // Given
+        Item food = new Item()
+                .setItem("burger")
+                .setAmount(4)
+                .setServed(false);
+        Item beer = new Item()
+                .setItem("burger")
+                .setAmount(4)
+                .setServed(false);
+
+        // When
+        Command command = Command.builder()
+                .setIdCommand(null)
+                .setClient(null)
+                .setFood(food)
+                .setBeer(beer)
+                .build();
+        final Map<String, AttributeValue> marshaled = command.marshal();
+
+        System.out.println(marshaled);
+        assertThat(marshaled).containsKeys("food", "beer");
     }
 
 }

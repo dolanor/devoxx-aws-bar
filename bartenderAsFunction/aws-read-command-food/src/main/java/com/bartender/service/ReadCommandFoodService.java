@@ -30,7 +30,7 @@ public class ReadCommandFoodService {
     public CommandResponse handleInput(CommandRequest commandRequest) {
         // TODO 02. generate id to the command (uuid)
         UUID id = UUID.randomUUID();
-        LOG.info("Food: {}", commandRequest.getFood());
+        LOG.info("Got: {}", commandRequest);
 
         // TODO 02. generate command (model.command) with date in utc format
         Command command = Command.builder()

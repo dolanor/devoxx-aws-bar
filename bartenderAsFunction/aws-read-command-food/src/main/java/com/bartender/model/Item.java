@@ -14,7 +14,7 @@ public class Item {
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
         map.put("item", AttributeValue.builder().s(this.getItem()).build());
-        map.put("amount", AttributeValue.builder().s(String.valueOf(this.getAmount())).build());
+        map.put("amount", AttributeValue.builder().n(String.valueOf(this.getAmount())).build());
         map.put("served", AttributeValue.builder().bool(this.isServed()).build());
         return map;
     }

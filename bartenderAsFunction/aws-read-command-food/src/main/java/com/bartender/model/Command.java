@@ -2,10 +2,7 @@ package com.bartender.model;
 
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Command {
     private String idCommand;
@@ -20,9 +17,15 @@ public class Command {
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("id", AttributeValue.builder().s(this.getIdCommand()).build());
-        map.put("date", AttributeValue.builder().s(this.getDateCommand()).build());
-        map.put("client", AttributeValue.builder().s(this.getClient()).build());
+        Optional.ofNullable(this.getIdCommand()).ifPresent(value ->
+                map.put("id", AttributeValue.builder().s(value).build())
+         );
+        Optional.ofNullable(this.getDateCommand()).ifPresent(value ->
+                map.put("date", AttributeValue.builder().s(value).build())
+        );
+        Optional.ofNullable(this.getClient()).ifPresent(value ->
+                map.put("client", AttributeValue.builder().s(value).build())
+        );
         Optional.ofNullable(food).ifPresent(actualFood ->
                 map.put("food", AttributeValue.builder().m(actualFood.marshal()).build())
         );
