@@ -6,7 +6,7 @@ This project is intended to show an example of a _Connected Bar_. By doing this 
 
 This workshop contains two main parts:
 
-* The [_drunkClient_](/drunkClient), which is a *nodejs app* representing an actual an IOT device.
+* The [_drunkClient_](/drunkClient), which is a *nodejs app* representing an actual IOT device.
 * [Several lambdas](/bartenderAsFunction) to handle request comming fron the _IOT client_.
 
 ## What technologies this project involves
