@@ -50,10 +50,10 @@ public class Item {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Item)) return false;
-        Item item = (Item) o;
-        return amount == item.amount &&
-                served == item.served &&
-                Objects.equals(item, item.item);
+        Item item1 = (Item) o;
+        return amount == item1.amount &&
+                served == item1.served &&
+                Objects.equals(item, item1.item);
     }
 
     @Override
@@ -69,5 +69,4 @@ public class Item {
                 ", served=" + served +
                 '}';
     }
-
 }
