@@ -20,14 +20,14 @@ public class Command {
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("IdCommand", AttributeValue.builder().s(this.getIdCommand()).build());
-        map.put("DateCommand", AttributeValue.builder().s(this.getDateCommand()).build());
-        map.put("Client", AttributeValue.builder().s(this.getClient()).build());
+        map.put("id", AttributeValue.builder().s(this.getIdCommand()).build());
+        map.put("date", AttributeValue.builder().s(this.getDateCommand()).build());
+        map.put("client", AttributeValue.builder().s(this.getClient()).build());
         Optional.ofNullable(food).ifPresent(actualFood ->
-                map.put("Food", AttributeValue.builder().m(actualFood.marshal()).build())
+                map.put("food", AttributeValue.builder().m(actualFood.marshal()).build())
         );
         Optional.ofNullable(beer).ifPresent(actualBeer ->
-                map.put("Beer", AttributeValue.builder().m(actualBeer.marshal()).build())
+                map.put("beer", AttributeValue.builder().m(actualBeer.marshal()).build())
         );
         return map;
     }
