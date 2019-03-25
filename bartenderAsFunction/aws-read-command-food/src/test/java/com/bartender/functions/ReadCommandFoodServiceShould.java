@@ -2,11 +2,14 @@ package com.bartender.functions;
 
 import com.bartender.dao.ReadCommandFoodRepository;
 import com.bartender.model.CommandResponse;
+import com.bartender.model.Item;
 import com.bartender.service.ReadCommandFoodService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,19 +24,18 @@ class ReadCommandFoodServiceShould implements JsonTools {
     );
 
     @Test
-    void return_same_id_if_specified() {
+    void verify_something() {
         // Given
-        Map<String, Object> input = new HashMap<>();
-        final String givenId = UUID.randomUUID().toString();
-        input.put("id", givenId);
+        Item item = new Item()
+                .setItem("burger")
+                .setAmount(4)
+                .setServed(false);
 
-        // When
-        /*ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-        CommandResponse ignoredResponse = readCommandFoodService.handleInput(input);
-        verify(readCommandFoodRepository, times(1)).saveCommand(stringCaptor.capture());*/
+        // When - CommandRequest
+        final Map<String, AttributeValue> marshalled = item.marshal();
 
-        // Then
-        /*assertThat(stringCaptor.getValue()).isEqualTo(givenId);*/
+        System.out.println(marshalled);
+        assertThat(marshalled).containsKeys("item", "amount", "served");
     }
 
 }
