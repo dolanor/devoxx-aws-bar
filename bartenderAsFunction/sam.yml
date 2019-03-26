@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.bartender.functions.RegisterClientHandler::handleRequest
-      Timeout: 10
+      Timeout: 30
       Runtime: java8
       MemorySize: 512
       CodeUri:
@@ -34,7 +34,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.bartender.functions.ReadCommandFoodHandler::handleRequest
-      Timeout: 10
+      Timeout: 13
       Runtime: java8
       MemorySize: 512
       CodeUri:
