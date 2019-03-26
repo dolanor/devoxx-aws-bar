@@ -30,7 +30,7 @@ public class ReadCommandBeerService {
     public CommandResponse handleInput(CommandRequest commandRequest) {
         // TODO 03. generate id to the command (uuid)
         UUID id = UUID.randomUUID();
-        LOG.info("Beer: {}", commandRequest.getBeer());
+        LOG.info("Got: {}", commandRequest);
 
         // TODO 03. generate command (model.command) with date in utc format
         Command command = Command.builder()

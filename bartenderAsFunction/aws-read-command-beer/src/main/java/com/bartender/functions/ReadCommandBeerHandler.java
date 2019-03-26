@@ -20,7 +20,7 @@ public class ReadCommandBeerHandler implements RequestHandler<CommandRequest, Ap
 
     @Override
     public ApiGatewayResponse handleRequest(CommandRequest commandRequest, Context context) {
-        LOG.info("received: {}", commandRequest);
+        LOG.info("received beer: {}", commandRequest);
         try {
             CommandResponse commandResponse = service.handleInput(commandRequest);
             return ApiGatewayResponse.builder()
@@ -28,7 +28,7 @@ public class ReadCommandBeerHandler implements RequestHandler<CommandRequest, Ap
                     .setObjectBody(commandResponse)
                     .build();
         } catch (Exception ex) {
-            LOG.error("Error reading command food", ex);
+            LOG.error("Error reading command beer", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(400)
                     .setObjectBody(ex)

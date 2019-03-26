@@ -2,15 +2,11 @@ package com.bartender.model;
 
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Command {
     private String idCommand;
     private String dateCommand;
-    private Item food;
     private Item beer;
     private String client;
 
@@ -20,11 +16,14 @@ public class Command {
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("id", AttributeValue.builder().s(this.getIdCommand()).build());
-        map.put("date", AttributeValue.builder().s(this.getDateCommand()).build());
-        map.put("client", AttributeValue.builder().s(this.getClient()).build());
-        Optional.ofNullable(food).ifPresent(actualFood ->
-                map.put("food", AttributeValue.builder().m(actualFood.marshal()).build())
+        Optional.ofNullable(this.getIdCommand()).ifPresent(value ->
+                map.put("id", AttributeValue.builder().s(value).build())
+         );
+        Optional.ofNullable(this.getDateCommand()).ifPresent(value ->
+                map.put("date", AttributeValue.builder().s(value).build())
+        );
+        Optional.ofNullable(this.getClient()).ifPresent(value ->
+                map.put("client", AttributeValue.builder().s(value).build())
         );
         Optional.ofNullable(beer).ifPresent(actualBeer ->
                 map.put("beer", AttributeValue.builder().m(actualBeer.marshal()).build())
@@ -35,7 +34,6 @@ public class Command {
     public static class Builder {
         private String idCommand;
         private String dateCommand;
-        private Item food;
         private Item beer;
         private String client;
 
@@ -46,11 +44,6 @@ public class Command {
 
         public Builder setDateCommand(String dateCommand) {
             this.dateCommand = dateCommand;
-            return this;
-        }
-
-        public Builder setFood(Item food) {
-            this.food = food;
             return this;
         }
 
@@ -68,7 +61,6 @@ public class Command {
             final Command command = new Command();
             command.idCommand = idCommand;
             command.dateCommand = dateCommand;
-            command.food = food;
             command.beer = beer;
             command.client =client;
             return command;
@@ -81,10 +73,6 @@ public class Command {
 
     public String getDateCommand() {
         return dateCommand;
-    }
-
-    public Item getFood() {
-        return food;
     }
 
     public Item getBeer() {
@@ -102,14 +90,13 @@ public class Command {
         Command command = (Command) o;
         return Objects.equals(idCommand, command.idCommand) &&
                 Objects.equals(dateCommand, command.dateCommand) &&
-                Objects.equals(food, command.food) &&
                 Objects.equals(beer, command.beer) &&
                 Objects.equals(client, command.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCommand, dateCommand, food, beer, client);
+        return Objects.hash(idCommand, dateCommand, beer, client);
     }
 
     @Override
@@ -117,7 +104,6 @@ public class Command {
         return "Command{" +
                 "idCommand='" + idCommand + '\'' +
                 ", dateCommand='" + dateCommand + '\'' +
-                ", food=" + food +
                 ", beer=" + beer +
                 ", client='" + client + '\'' +
                 '}';

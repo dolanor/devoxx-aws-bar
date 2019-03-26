@@ -1,36 +1,44 @@
 package com.bartender.functions;
 
-import com.bartender.dao.ReadCommandBeerRepository;
-import com.bartender.service.ReadCommandBeerService;
+import com.bartender.model.Command;
+import com.bartender.model.Item;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class ReadCommandBeerServiceShould implements JsonTools {
-    private ReadCommandBeerRepository readCommandBeerRepository = mock(ReadCommandBeerRepository.class);
-    private ReadCommandBeerService readCommandFoodService = new ReadCommandBeerService(
-            readCommandBeerRepository
-    );
 
     @Test
-    void return_same_id_if_specified() {
+    void verify_beer_is_marshaled() {
         // Given
-        Map<String, Object> input = new HashMap<>();
-        final String givenId = UUID.randomUUID().toString();
-        input.put("id", givenId);
+        Item item = new Item()
+                .setItem("burger")
+                .setAmount(4)
+                .setServed(false);
+
+        assertThat(item.marshal()).containsKeys("item", "amount", "served");
+    }
+
+    @Test
+    void verify_command_is_marshaled() {
+        // Given
+        Item beer = new Item()
+                .setItem("burger")
+                .setAmount(4)
+                .setServed(false);
 
         // When
-        /*ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
-        CommandResponse ignoredResponse = readCommandFoodService.handleInput(input);
-        verify(readCommandBeerRepository, times(1)).saveCommand(stringCaptor.capture());*/
+        Command command = Command.builder()
+                .setIdCommand(null)
+                .setClient(null)
+                .setBeer(beer)
+                .build();
+        final Map<String, AttributeValue> marshaled = command.marshal();
 
-        // Then
-        /*assertThat(stringCaptor.getValue()).isEqualTo(givenId);*/
+        assertThat(marshaled).containsKeys("beer");
     }
 
 }
