@@ -20,7 +20,7 @@ public class ReadCommandFoodHandler implements RequestHandler<CommandRequest, Ap
 
     @Override
     public ApiGatewayResponse handleRequest(CommandRequest commandRequest, Context context) {
-        LOG.info("received food: {}", commandRequest);
+        LOG.info("received food2: {}", commandRequest);
         try {
             CommandResponse commandResponse = service.handleInput(commandRequest);
             return ApiGatewayResponse.builder()
