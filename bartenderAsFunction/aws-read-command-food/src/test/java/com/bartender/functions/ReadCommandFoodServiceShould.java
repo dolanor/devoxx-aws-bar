@@ -43,7 +43,6 @@ class ReadCommandFoodServiceShould implements JsonTools {
                 .build();
         final Map<String, AttributeValue> marshaled = command.marshal();
 
-        System.out.println(marshaled);
         assertThat(marshaled).containsKeys("food", "beer");
     }
 
