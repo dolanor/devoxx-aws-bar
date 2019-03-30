@@ -88,6 +88,7 @@ Resources:
       Handler: com.bartender.functions.ChangeBarStatusHandler::handleRequest
       Timeout: 15
       Runtime: java8
+      MemorySize: 512
       CodeUri:
         Bucket: handsonbartender
         Key: !Sub ${User}/change-bar-status.jar
@@ -160,7 +161,33 @@ Resources:
                 httpMethod: "POST"
                 contentHandling: "CONVERT_TO_TEXT"
                 type: "aws_proxy"
-
+          /client/{idClient}/close:
+            post:
+              summary: close the bar for a client
+              operationId: ClientPost
+              consumes:
+              - application/json
+              produces:
+              - application/json
+              parameters:
+              - in: path
+                name: idClient
+                required: true
+                description: The id of the client.
+                type: string
+              responses:
+                '200':
+                  description: "200 response"
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: "200"
+                uri:
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaStatusBar.Arn}/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: "POST"
+                contentHandling: "CONVERT_TO_TEXT"
+                type: "aws_proxy"
         definitions:
           Client:
             type: object
