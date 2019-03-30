@@ -39,7 +39,7 @@ Resources:
       MemorySize: 512
       CodeUri:
         Bucket: handsonbartender
-        Key: !Sub ${User}/read-command-beer.jar
+        Key: !Sub ${User}/read-command-food.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -65,7 +65,7 @@ Resources:
       MemorySize: 512
       CodeUri:
         Bucket: handsonbartender
-        Key: !Sub ${User}/read-command-food.jar
+        Key: !Sub ${User}/read-command-beer.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
