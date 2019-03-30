@@ -15,7 +15,7 @@ TODO
 You need to trigger the service using the lambda URL!
 
 ```
-curl -d "param1=value1&param2=value2" -X POST http://localhost:3000/data
+curl -d "param1=test" -X POST https://{APY_GATEWAY_LAMBDA_URL}.eu-west-1.amazonaws.com/Stage/client/{userId}/close
 ```
 
 Go to `/drunkClient/server.js` and uncomment the line `processTest();`

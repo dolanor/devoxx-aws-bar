@@ -4,11 +4,14 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.ChangeBarStatusRepositoryImpl;
 import com.bartender.model.ApiGatewayResponse;
+import com.bartender.model.CommandRequest;
+import com.bartender.model.CommandResponse;
 import com.bartender.service.ChangeBarStatusService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class ChangeBarStatusHandler implements RequestHandler<Map<String, Object>, ApiGatewayResponse> {
 
@@ -21,14 +24,27 @@ public class ChangeBarStatusHandler implements RequestHandler<Map<String, Object
     @Override
     public ApiGatewayResponse handleRequest(Map<String, Object> commandRequest, Context context) {
         LOG.info("received change bar status: {}", commandRequest);
+
         try {
-            // CommandResponse commandResponse = service.handleInput(commandRequest);
+            // TODO 04, get the attribute 'path' and build a CommandRequest 'from' the value
+            final CommandRequest request = Optional.ofNullable(commandRequest.get("path"))
+                    .map(Object::toString)
+                    .flatMap(CommandRequest::from)
+                    .orElseThrow(IllegalArgumentException::new);
+
+            CommandResponse commandResponse = service.handleInput(request);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
-                    .setObjectBody("Everything went ok!")
+                    .setObjectBody(commandResponse)
+                    .build();
+        } catch(IllegalArgumentException ex) {
+            LOG.error("Error changing bar status", ex);
+            return ApiGatewayResponse.builder()
+                    .setStatusCode(422)
+                    .setObjectBody(ex)
                     .build();
         } catch (Exception ex) {
-            LOG.error("Error changing status bar", ex);
+            LOG.error("Error changing bar status", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(400)
                     .setObjectBody(ex)

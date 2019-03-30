@@ -1,6 +1,6 @@
 package com.bartender.dao;
 
-import com.bartender.model.Command;
+import com.bartender.model.CommandRequest;
 import com.bartender.model.CommandResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ public class ChangeBarStatusRepositoryImpl implements ChangeBarStatusRepository 
     private static final Logger LOG = LogManager.getLogger(ChangeBarStatusRepositoryImpl.class);
 
     @Override
-    public CommandResponse saveCommand(Command command) {
+    public CommandResponse saveCommand(CommandRequest commandRequest) {
         /*try (DynamoDbClient dynamoDB = newConnection()) {
             LOG.info("About to write command: {} in {}", command.marshal(), tableName);
             PutItemRequest request =  PutItemRequest.builder()

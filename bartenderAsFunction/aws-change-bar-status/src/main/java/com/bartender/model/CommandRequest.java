@@ -1,27 +1,30 @@
 package com.bartender.model;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandRequest {
-    private Item food;
-    private Item beer;
+    private String userId;
 
-    public Item getFood() {
-        return food;
+    private CommandRequest(String userId) {
+        this.userId = userId;
     }
 
-    public CommandRequest setFood(Item food) {
-        this.food = food;
-        return this;
+    public String getUserId() {
+        return userId;
     }
 
-    public Item getBeer() {
-        return beer;
-    }
+    public static Optional<CommandRequest> from(String path) {
+        final String regex = "\\/client\\/(\\w+)\\/close";
+        final Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+        final Matcher matcher = pattern.matcher(path);
 
-    public CommandRequest setBeer(Item beer) {
-        this.beer = beer;
-        return this;
+        // TODO 04, if the pattern matches, return the group 1
+        return (matcher.find())
+            ? Optional.of(new CommandRequest(matcher.group(1)))
+            : Optional.empty();
     }
 
     @Override
@@ -29,20 +32,18 @@ public class CommandRequest {
         if (this == o) return true;
         if (!(o instanceof CommandRequest)) return false;
         CommandRequest that = (CommandRequest) o;
-        return Objects.equals(food, that.food) &&
-                Objects.equals(beer, that.beer);
+        return Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(food, beer);
+        return Objects.hash(userId);
     }
 
     @Override
     public String toString() {
         return "CommandRequest{" +
-                "food=" + food +
-                ", beer=" + beer +
+                "userId='" + userId + '\'' +
                 '}';
     }
 }
