@@ -82,6 +82,31 @@ Resources:
           Properties:
             AwsIotSqlVersion: "2016-03-23"
             Sql: "SELECT *, topic(2) as client FROM 'topics/+/topic_drunk' where beer.amount > 0"
+  LambdaStatusBar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.bartender.functions.ChangeBarStatusHandler::handleRequest
+      Timeout: 15
+      Runtime: java8
+      CodeUri:
+        Bucket: handsonbartender
+        Key: !Sub ${User}/change-bar-status.jar
+      Policies:
+      - AWSIoTThingsRegistration
+      - AWSIoTConfigAccess
+      - AWSIoTDataAccess
+      - DynamoDBCrudPolicy:
+          TableName: !Sub ${User}-Command
+      Environment:
+        Variables:
+          TABLE_COMMANDS: !Sub ${User}-Command
+      Events:
+        CommandsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Bartender
+            Path: /client/{idClient}/close
+            Method: POST
   Bartender:
     Type: AWS::Serverless::Api
     Properties:
