@@ -16,8 +16,7 @@ I give you also the structure of the *waiter* project. It includes the *aws-sam*
 
 ## Before you start: Requirements
 
-* go > 1.10 
-* go dep
+* go > 1.11 
 * [sam local](https://github.com/awslabs/aws-sam-cli)
 * a profile "epf" for aws-cli with your aws credentials
 
@@ -33,9 +32,9 @@ Create your GOPATH environment variable with the path to your go projects.
 Inside this path, create a folder src.
 
 ```
-$ cd $GOPATH/src
-
 $ git clone https://github.com/dicaormu/bartenderAsFunction
+
+$ go mod init bartenderAsFunction
 ```
 
 

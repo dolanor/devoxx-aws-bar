@@ -12,7 +12,7 @@ fi
 export GOOS=linux
 
 echo "building $P_FILE_TO_BUILD...."
-target=${P_FOLDER}
+
 go build -o  ${P_FOLDER}/$P_FILE_TO_BUILD bartenderAsFunction/functions/$P_FILE_TO_BUILD;
 echo ".....built "
 

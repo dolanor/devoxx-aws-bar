@@ -13,7 +13,7 @@ var DataConnectionManager dao.CommandConnectionInterface
 
 func Handler(iotRequest model.CommandRequest) error {
 	// TODO 1. generate id to the command (uuid)
-	uid, _ := uuid.NewV4()
+	uid := uuid.NewV4()
 	fmt.Println("food:",iotRequest.Food)
 	// TODO 2. generate command (model.command) with date in utc format
 	command := model.Command{IdCommand: uid.String(), DateCommand: time.Now().UTC().Format(time.RFC3339), Food: iotRequest.Food}

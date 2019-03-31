@@ -19,7 +19,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{StatusCode: 400}, err
 	}
 	if drunkClient.IdClient == "" {
-		uid, _ := uuid.NewV4()
+		uid := uuid.NewV4()
 		drunkClient.IdClient = uid.String()
 	}
 	IotConnectionManager.RegisterDevice(&drunkClient)
