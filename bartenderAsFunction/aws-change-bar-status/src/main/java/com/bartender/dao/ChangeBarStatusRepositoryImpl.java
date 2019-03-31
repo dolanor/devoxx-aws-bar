@@ -2,13 +2,13 @@ package com.bartender.dao;
 
 import com.bartender.model.CommandRequest;
 import com.bartender.model.CommandResponse;
+import com.bartender.model.ShadowState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.iotdataplane.IotDataPlaneClient;
-import software.amazon.awssdk.services.iotdataplane.model.GetThingShadowRequest;
 import software.amazon.awssdk.services.iotdataplane.model.UpdateThingShadowRequest;
+import software.amazon.awssdk.services.iotdataplane.model.UpdateThingShadowResponse;
 
 /**
  * Some examples are specified here
@@ -21,27 +21,26 @@ public class ChangeBarStatusRepositoryImpl implements ChangeBarStatusRepository 
     @Override
     public CommandResponse saveCommand(CommandRequest commandRequest) {
         try (IotDataPlaneClient client = newClient()) {
-            /*final UpdateThingShadowRequest request = UpdateThingShadowRequest.builder()
-                    .thingName(commandRequest.getUserId())
-                    .payload(buildPayload())
-                    .build();*/
-            /*client.updateThingShadow(request);*/
+            // TODO 04, create a new UpdateThingShadowRequest with a 'thingName'
+            final UpdateThingShadowRequest.Builder builder =
+                    UpdateThingShadowRequest
+                            .builder()
+                            .thingName(commandRequest.getUserId());
 
-            GetThingShadowRequest request = GetThingShadowRequest.builder()
-                    .thingName(commandRequest.getUserId())
-                    .build();
-            String utfString = client.getThingShadow(request).payload()
-                    .asUtf8String();
+            // TODO 04, create a new 'Closed ShadowState' and set the 'payload' to the builder
+            final UpdateThingShadowRequest request =
+                    ShadowState.Closed().buildPayload()
+                            .map(payload -> builder.payload(payload).build())
+                            .orElseGet(builder::build);
+
+            // TODO 04, 'updateThingShadow'
+            final UpdateThingShadowResponse response = client.updateThingShadow(request);
 
             return CommandResponse.builder()
                     .setIdClient(commandRequest.getUserId())
-                    .setDocument(utfString)
+                    .setDocument(response.payload().asUtf8String())
                     .build();
         }
-    }
-
-    private SdkBytes buildPayload() {
-        return SdkBytes.fromUtf8String("{ \"state\": {\"reported\":{ \"r\": {}}}}");
     }
 
     // TODO 04. create a new client

@@ -1,6 +1,8 @@
 package com.bartender.functions;
 
 import com.bartender.model.CommandRequest;
+import com.bartender.model.Json;
+import com.bartender.model.ShadowState;
 import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
@@ -24,5 +26,15 @@ class ChangeBarStatusServiceShould implements JsonTools {
         assertThat(CommandRequest.from("/client/close").isPresent()).isFalse();
         assertThat(CommandRequest.from("/").isPresent()).isFalse();
         assertThat(CommandRequest.from("").isPresent()).isFalse();
+    }
+
+    @Test
+    void transform_to_json() {
+        ShadowState state = new ShadowState()
+                .setBarStatus(
+                        new ShadowState.BarStatus()
+                                .setDesired("CLOSED"));
+        final Optional<String> json = Json.serializer().toJson(state);
+        assertThat(json).isEqualTo(Optional.of("{\"barStatus\":{\"desired\":\"CLOSED\"}}"));
     }
 }

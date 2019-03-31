@@ -1,6 +1,7 @@
 package com.bartender.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Json {
 
@@ -58,6 +60,14 @@ public class Json {
             return mapper.readValue(json, new TypeReference<Map<String, String>>(){});
         } catch (IOException e) {
             return new HashMap<>();
+        }
+    }
+
+    public Optional<String> toJson(Object obj) {
+        try {
+            return Optional.ofNullable(mapper.writeValueAsString(obj));
+        } catch (JsonProcessingException e) {
+            return Optional.empty();
         }
     }
 
