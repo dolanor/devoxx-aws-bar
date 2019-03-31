@@ -38,13 +38,13 @@ public class ChangeBarStatusHandler implements RequestHandler<Map<String, Object
                     .setObjectBody(commandResponse)
                     .build();
         } catch(IllegalArgumentException ex) {
-            LOG.error("Error changing bar status", ex);
+            LOG.error("Error parsing data for changing bar status", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(422)
                     .setObjectBody(ex)
                     .build();
         } catch (Exception ex) {
-            LOG.error("Error changing bar status", ex);
+            LOG.error("Unknown error while changing bar status", ex);
             return ApiGatewayResponse.builder()
                     .setStatusCode(400)
                     .setObjectBody(ex)

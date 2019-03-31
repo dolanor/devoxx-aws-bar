@@ -19,11 +19,7 @@ public class ChangeBarStatusService {
 
     public CommandResponse handleInput(CommandRequest commandRequest) {
         LOG.info("Got: {}", commandRequest);
-        // TODO 04. save to the shadow
-        //return changeBarStatusRepository.saveCommand(null);
-        return CommandResponse.builder()
-                .setIdClient(commandRequest.getUserId())
-                .build();
+        return changeBarStatusRepository.saveCommand(commandRequest);
     }
 
 }
