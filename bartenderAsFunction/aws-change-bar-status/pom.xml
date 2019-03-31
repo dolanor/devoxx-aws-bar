@@ -25,8 +25,8 @@
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
-            <artifactId>dynamodb</artifactId>
-            <version>2.5.10</version>
+            <artifactId>iotdataplane</artifactId>
+            <version>2.5.8</version>
         </dependency>
         <!-- common -->
         <dependency>
