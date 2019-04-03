@@ -49,7 +49,7 @@ public class ChangeBarStatusRepositoryImpl implements ChangeBarStatusRepository 
     // TODO 04. create a new client
     private IotDataPlaneClient newClient() {
         return IotDataPlaneClient.builder()
-                .region(Region.US_EAST_1)
+                .region(Region.EU_WEST_1)
                 .build();
     }
 }
