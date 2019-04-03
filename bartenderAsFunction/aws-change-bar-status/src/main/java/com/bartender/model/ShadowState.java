@@ -9,25 +9,41 @@ public class ShadowState {
     private BarState state;
 
     public static ShadowState Closed() {
-        final BarState barState = new BarState().setDesired("CLOSED");
+        final BarState barState = new BarState().setDesired(Desired.CLOSED);
         return new ShadowState().setState(barState);
     }
 
     public Optional<SdkBytes> buildPayload() {
         // TODO 04, call SdkBytes.fromUtf8String after serializing the 'ShadowState'
-        return Json.serializer().toJson(this.state)
+        return Json.serializer().toJson(this)
                 .map(SdkBytes::fromUtf8String);
     }
 
     public static class BarState {
-        String desired;
+        Desired desired;
 
-        public String getDesired() {
+        public Desired getDesired() {
             return desired;
         }
 
-        public BarState setDesired(String desired) {
+        public BarState setDesired(Desired desired) {
             this.desired = desired;
+            return this;
+        }
+    }
+
+    public static class Desired {
+        public static final Desired CLOSED = new Desired().setBarStatus("CLOSED");
+        public static final Desired OPENED = new Desired().setBarStatus("OPENED");
+
+        String barStatus;
+
+        public String getBarStatus() {
+            return barStatus;
+        }
+
+        public Desired setBarStatus(String barStatus) {
+            this.barStatus = barStatus;
             return this;
         }
     }

@@ -4,6 +4,8 @@ import com.bartender.model.CommandRequest;
 import com.bartender.model.Json;
 import com.bartender.model.ShadowState;
 import org.junit.jupiter.api.Test;
+import software.amazon.awssdk.core.SdkBytes;
+
 import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -31,8 +33,15 @@ class ChangeBarStateServiceShould implements JsonTools {
     @Test
     void transform_to_json() {
         ShadowState state = new ShadowState()
-                .setState(new ShadowState.BarState().setDesired("CLOSED"));
+                .setState(new ShadowState.BarState().setDesired(ShadowState.Desired.CLOSED));
         final Optional<String> json = Json.serializer().toJson(state);
-        assertThat(json).isEqualTo(Optional.of("{\"state\":{\"desired\":\"CLOSED\"}}"));
+        assertThat(json).isEqualTo(Optional.of("{\"state\":{\"desired\":{\"barStatus\":\"CLOSED\"}}}"));
+    }
+
+    @Test
+    void serialize_to_and_from_sdkbytes() {
+        final Optional<SdkBytes> maybeSdkBytes = ShadowState.Closed().buildPayload();
+        final SdkBytes sdkBytes = maybeSdkBytes.orElseThrow(() -> new IllegalArgumentException(""));
+        assertThat(sdkBytes.asUtf8String()).isEqualTo("{\"state\":{\"desired\":{\"barStatus\":\"CLOSED\"}}}");
     }
 }
