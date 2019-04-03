@@ -3,29 +3,21 @@
 P_USER=$1
 
 if [[ -z "${P_USER}" ]]; then
-  P_USER=user1
+  P_USER=user3
 fi
 
-for folder in bin/*;
-do
-echo $folder
-lambda_name=`basename $folder | sed 's/{//' | sed 's/}//'`
-echo "Using: $lambda_name"
-
-aws s3api put-object \
-  --bucket handsonbartender \
-  --key $P_USER/$lambda_name \
-  --body bin/$lambda_name \
+aws cloudformation package \
+  --template-file ./sam.yml \
+  --s3-bucket handsonbartender \
+  --output-template-file ./packaged.yml \
   --profile epf
-
-done
 
 ## we omit https://docs.aws.amazon.com/cli/latest/reference/cloudformation/package.html and we do it by hand
 ## because it is more convenient for the workshop
 echo "deploying...."
 
 aws cloudformation deploy \
-  --template-file ./sam.yml \
+  --template-file ./packaged.yml \
   --stack-name $P_USER-bartender-sam-deploy \
   --parameter-overrides User=$P_USER \
   --capabilities CAPABILITY_IAM \

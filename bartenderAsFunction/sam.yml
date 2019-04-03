@@ -9,13 +9,11 @@ Resources:
   LambdaRegisterClient:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: bin/register-client.jar
       Handler: com.bartender.functions.RegisterClientHandler::handleRequest
       Timeout: 30
       Runtime: java8
       MemorySize: 512
-      CodeUri:
-        Bucket: handsonbartender
-        Key: !Sub ${User}/register-client.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -33,13 +31,11 @@ Resources:
   LambdaRuleReadCommandFood:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: bin/read-command-food.jar
       Handler: com.bartender.functions.ReadCommandFoodHandler::handleRequest
       Timeout: 13
       Runtime: java8
       MemorySize: 512
-      CodeUri:
-        Bucket: handsonbartender
-        Key: !Sub ${User}/read-command-food.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -59,13 +55,11 @@ Resources:
   LambdaRuleReadCommandBeer:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: bin/read-command-beer.jar
       Handler: com.bartender.functions.ReadCommandBeerHandler::handleRequest
       Timeout: 13
       Runtime: java8
       MemorySize: 512
-      CodeUri:
-        Bucket: handsonbartender
-        Key: !Sub ${User}/read-command-beer.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -82,16 +76,14 @@ Resources:
           Properties:
             AwsIotSqlVersion: "2016-03-23"
             Sql: "SELECT *, topic(2) as client FROM 'topics/+/topic_drunk' where beer.amount > 0"
-  LambdaStatusBar:
+  LambdaBarStatus:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: bin/change-bar-status.jar
       Handler: com.bartender.functions.ChangeBarStatusHandler::handleRequest
       Timeout: 15
       Runtime: java8
       MemorySize: 512
-      CodeUri:
-        Bucket: handsonbartender
-        Key: !Sub ${User}/change-bar-status.jar
       Policies:
       - AWSIoTThingsRegistration
       - AWSIoTConfigAccess
@@ -183,7 +175,7 @@ Resources:
                   default:
                     statusCode: "200"
                 uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaStatusBar.Arn}/invocations"
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaBarStatus.Arn}/invocations"
                 passthroughBehavior: "when_no_match"
                 httpMethod: "POST"
                 contentHandling: "CONVERT_TO_TEXT"
