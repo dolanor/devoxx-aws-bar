@@ -6,39 +6,38 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class ShadowState {
-    private BarStatus barStatus;
+    private BarState state;
 
     public static ShadowState Closed() {
-        final BarStatus barStatus = new BarStatus().setDesired("CLOSED");
-        return new ShadowState().setBarStatus(barStatus);
+        final BarState barState = new BarState().setDesired("CLOSED");
+        return new ShadowState().setState(barState);
     }
 
     public Optional<SdkBytes> buildPayload() {
         // TODO 04, call SdkBytes.fromUtf8String after serializing the 'ShadowState'
-        return Json.serializer().toJson(this)
+        return Json.serializer().toJson(this.state)
                 .map(SdkBytes::fromUtf8String);
     }
 
-    public static class BarStatus {
+    public static class BarState {
         String desired;
 
         public String getDesired() {
             return desired;
         }
 
-        public BarStatus setDesired(String desired) {
+        public BarState setDesired(String desired) {
             this.desired = desired;
             return this;
         }
     }
 
-
-    public BarStatus getBarStatus() {
-        return barStatus;
+    public BarState getState() {
+        return state;
     }
 
-    public ShadowState setBarStatus(BarStatus barStatus) {
-        this.barStatus = barStatus;
+    public ShadowState setState(BarState state) {
+        this.state = state;
         return this;
     }
 
@@ -47,18 +46,18 @@ public class ShadowState {
         if (this == o) return true;
         if (!(o instanceof ShadowState)) return false;
         ShadowState that = (ShadowState) o;
-        return Objects.equals(barStatus, that.barStatus);
+        return Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(barStatus);
+        return Objects.hash(state);
     }
 
     @Override
     public String toString() {
         return "ShadowState{" +
-                "barStatus=" + barStatus +
+                "state=" + state +
                 '}';
     }
 }

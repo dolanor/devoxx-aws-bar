@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-class ChangeBarStatusServiceShould implements JsonTools {
+class ChangeBarStateServiceShould implements JsonTools {
 
     @Test
     void extract_client_id_when_exist() {
@@ -31,10 +31,8 @@ class ChangeBarStatusServiceShould implements JsonTools {
     @Test
     void transform_to_json() {
         ShadowState state = new ShadowState()
-                .setBarStatus(
-                        new ShadowState.BarStatus()
-                                .setDesired("CLOSED"));
+                .setState(new ShadowState.BarState().setDesired("CLOSED"));
         final Optional<String> json = Json.serializer().toJson(state);
-        assertThat(json).isEqualTo(Optional.of("{\"barStatus\":{\"desired\":\"CLOSED\"}}"));
+        assertThat(json).isEqualTo(Optional.of("{\"state\":{\"desired\":\"CLOSED\"}}"));
     }
 }
