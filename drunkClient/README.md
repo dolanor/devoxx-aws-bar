@@ -4,7 +4,7 @@ This is the simulated IOT device (aka "_drunk client_") implemented as a web app
 
 To run use the command
 ```
-$ node server.js
+$ npm start
 ```
 
 Use this project as a complement for the bartender-cloud project. This is the client or drunk that is going to ask for commands to the server.
