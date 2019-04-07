@@ -5,7 +5,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.bartender.dao.GetFactureRepositoryImpl;
 import com.bartender.model.ApiGatewayResponse;
 import com.bartender.model.IotEventRequest;
-import com.bartender.model.CommandResponse;
 import com.bartender.service.GetFactureService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

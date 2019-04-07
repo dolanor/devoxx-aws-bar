@@ -5,9 +5,10 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import java.util.*;
 
 public class Command {
-    private String idCommand;
+    private String id;
     private String dateCommand;
     private Item beer;
+    private Item food;
     private String client;
 
     public static Builder builder() {
@@ -16,7 +17,7 @@ public class Command {
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        Optional.ofNullable(this.getIdCommand()).ifPresent(value ->
+        Optional.ofNullable(this.getId()).ifPresent(value ->
                 map.put("id", AttributeValue.builder().s(value).build())
          );
         Optional.ofNullable(this.getDateCommand()).ifPresent(value ->
@@ -31,14 +32,21 @@ public class Command {
         return map;
     }
 
+    public static Command from(String deviceId, Map<String, AttributeValue> result) {
+        return builder()
+                .setClient(deviceId)
+                .build();
+    }
+
     public static class Builder {
-        private String idCommand;
+        private String id;
         private String dateCommand;
         private Item beer;
+        private Item food;
         private String client;
 
-        public Builder setIdCommand(String idCommand) {
-            this.idCommand = idCommand;
+        public Builder setId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -52,18 +60,29 @@ public class Command {
             return this;
         }
 
+        public Builder setBeer(Item beer) {
+            this.beer = beer;
+            return this;
+        }
+
+        public Builder setFood(Item food) {
+            this.food = food;
+            return this;
+        }
+
         public Command build() {
             final Command command = new Command();
-            command.idCommand = idCommand;
+            command.id = id;
             command.dateCommand = dateCommand;
             command.beer = beer;
-            command.client =client;
+            command.food = food;
+            command.client = client;
             return command;
         }
     }
 
-    public String getIdCommand() {
-        return idCommand;
+    public String getId() {
+        return id;
     }
 
     public String getDateCommand() {
@@ -72,6 +91,10 @@ public class Command {
 
     public Item getBeer() {
         return beer;
+    }
+
+    public Item getFood() {
+        return food;
     }
 
     public String getClient() {
@@ -83,23 +106,25 @@ public class Command {
         if (this == o) return true;
         if (!(o instanceof Command)) return false;
         Command command = (Command) o;
-        return Objects.equals(idCommand, command.idCommand) &&
+        return Objects.equals(id, command.id) &&
                 Objects.equals(dateCommand, command.dateCommand) &&
                 Objects.equals(beer, command.beer) &&
+                Objects.equals(food, command.food) &&
                 Objects.equals(client, command.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCommand, dateCommand, beer, client);
+        return Objects.hash(id, dateCommand, beer, food, client);
     }
 
     @Override
     public String toString() {
         return "Command{" +
-                "idCommand='" + idCommand + '\'' +
+                "id='" + id + '\'' +
                 ", dateCommand='" + dateCommand + '\'' +
                 ", beer=" + beer +
+                ", food=" + food +
                 ", client='" + client + '\'' +
                 '}';
     }

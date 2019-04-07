@@ -1,44 +1,127 @@
 package com.bartender.functions;
 
-import com.bartender.model.Command;
-import com.bartender.model.Item;
+import com.bartender.dao.GetFactureRepository;
+import com.bartender.model.*;
+import com.bartender.service.GetFactureService;
 import org.junit.jupiter.api.Test;
-import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
-
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GetFactureServiceShould implements JsonTools {
 
-    @Test
-    void verify_beer_is_marshaled() {
-        // Given
-        Item item = new Item()
-                .setItem("burger")
-                .setAmount(4)
-                .setServed(false);
+    private final GetFactureRepository factureRepository = mock(GetFactureRepository.class);
+    private GetFactureService factureService = new GetFactureService(factureRepository);
 
-        assertThat(item.marshal()).containsKeys("item", "amount", "served");
+    @Test
+    void invoke_repository_when_states_are_equal() {
+        // Given
+        final IotShadowState shadowState = new IotShadowState()
+                .setDesired(new ClientObjectState().setBarStatus(IotShadowState.CLOSED))
+                .setReported(new ClientObjectState().setBarStatus(IotShadowState.CLOSED));
+        IotEventRequest iotEventRequest = new IotEventRequest()
+                .setCurrent(new IotShadowDoc().setState(shadowState));
+
+        final Command expectedResponse = Command.builder()
+                .setClient("123456")
+                .setFood(new Item()
+                        .setServed(false))
+                .setBeer(new Item()
+                        .setServed(false))
+                .build();
+        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+        when(factureRepository.saveCommand(any())).thenReturn(expectedResponse);
+
+        // When
+        final List<Command> response = factureService.handleInput(iotEventRequest);
+
+        // Then
+        assertThat(response).hasSize(1);
+        assertThat(response.get(0).getClient()).isEqualTo(expectedResponse.getClient());
+        assertThat(response.get(0).getFood().isServed()).isTrue();
+        assertThat(response.get(0).getBeer().isServed()).isTrue();
     }
 
     @Test
-    void verify_command_is_marshaled() {
+    void invoke_repository_when_states_are_equal_when_no_items() {
         // Given
-        Item beer = new Item()
-                .setItem("burger")
-                .setAmount(4)
-                .setServed(false);
+        final IotShadowState shadowState = new IotShadowState()
+                .setDesired(new ClientObjectState().setBarStatus(IotShadowState.CLOSED))
+                .setReported(new ClientObjectState().setBarStatus(IotShadowState.CLOSED));
+        IotEventRequest iotEventRequest = new IotEventRequest()
+                .setCurrent(new IotShadowDoc().setState(shadowState));
+
+        final Command expectedResponse = Command.builder()
+                .setClient("123456")
+                .build();
+        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+        when(factureRepository.saveCommand(any())).thenReturn(expectedResponse);
 
         // When
-        Command command = Command.builder()
-                .setIdCommand(null)
-                .setClient(null)
-                .setBeer(beer)
-                .build();
-        final Map<String, AttributeValue> marshaled = command.marshal();
+        final List<Command> response = factureService.handleInput(iotEventRequest);
 
-        assertThat(marshaled).containsKeys("beer");
+        // Then
+        assertThat(response).hasSize(1);
+        assertThat(response.get(0).getClient()).isEqualTo(expectedResponse.getClient());
+    }
+
+    @Test
+    void reject_because_no_desired_state() {
+        // Given
+        final IotShadowState shadowState = new IotShadowState()
+                .setDesired(null)
+                .setReported(new ClientObjectState().setBarStatus(IotShadowState.CLOSED));
+        IotEventRequest iotEventRequest = new IotEventRequest()
+                .setCurrent(new IotShadowDoc().setState(shadowState));
+
+        final Command expectedResponse = Command.builder()
+                .setClient("123456").build();
+        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+
+        // When
+        final List<Command> response = factureService.handleInput(iotEventRequest);
+        assertThat(response).isEmpty();
+    }
+
+    @Test
+    void reject_because_no_reported_state() {
+        // Given
+        final IotShadowState shadowState = new IotShadowState()
+                .setDesired(new ClientObjectState().setBarStatus(IotShadowState.CLOSED))
+                .setReported(null);
+        IotEventRequest iotEventRequest = new IotEventRequest()
+                .setCurrent(new IotShadowDoc().setState(shadowState));
+
+        final Command expectedResponse = Command.builder()
+                .setClient("123456").build();
+        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+
+        // When
+        final List<Command> response = factureService.handleInput(iotEventRequest);
+        assertThat(response).isEmpty();
+    }
+
+    @Test
+    void invoke_repository_when_states_are_NOT_equal() {
+        // Given
+        final IotShadowState shadowState = new IotShadowState()
+                .setDesired(new ClientObjectState().setBarStatus(IotShadowState.CLOSED))
+                .setReported(new ClientObjectState().setBarStatus(UUID.randomUUID().toString()));
+        IotEventRequest iotEventRequest = new IotEventRequest()
+                .setCurrent(new IotShadowDoc().setState(shadowState));
+
+        final Command expectedResponse = Command.builder()
+                .setClient("123456").build();
+        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+
+        // When
+        final List<Command> response = factureService.handleInput(iotEventRequest);
+        assertThat(response).isEmpty();
     }
 
 }

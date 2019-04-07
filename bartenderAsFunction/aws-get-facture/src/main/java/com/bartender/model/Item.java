@@ -5,11 +5,22 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Item {
     private String item;
     private int amount;
     private boolean served;
+
+    public static Optional<Item> from(Item newValue) {
+        return Optional.ofNullable(newValue)
+                .map(newItem ->
+                    new Item()
+                        .setItem(newItem.item)
+                        .setAmount(newItem.amount)
+                        .setServed(newItem.served)
+                );
+    }
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();

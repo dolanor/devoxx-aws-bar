@@ -6,6 +6,8 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IotShadowState {
+    public static final String CLOSED = "CLOSED";
+
     private ClientObjectState desired;
     private ClientObjectState reported;
 
