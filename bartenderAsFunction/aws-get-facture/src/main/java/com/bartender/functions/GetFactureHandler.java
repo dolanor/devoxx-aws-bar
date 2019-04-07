@@ -22,10 +22,9 @@ public class GetFactureHandler implements RequestHandler<IotEventRequest, ApiGat
     public ApiGatewayResponse handleRequest(IotEventRequest iotEventRequest, Context context) {
         LOG.info("received iot event: {}", iotEventRequest);
         try {
-            CommandResponse commandResponse = service.handleInput(iotEventRequest);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
-                    .setObjectBody(commandResponse)
+                    .setObjectBody(service.handleInput(iotEventRequest))
                     .build();
         } catch (Exception ex) {
             LOG.error("Error reading iot event", ex);

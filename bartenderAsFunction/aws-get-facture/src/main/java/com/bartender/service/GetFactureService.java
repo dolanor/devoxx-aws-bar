@@ -1,16 +1,13 @@
 package com.bartender.service;
 
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.bartender.dao.GetFactureRepository;
-import com.bartender.model.Command;
 import com.bartender.model.IotEventRequest;
 import com.bartender.model.CommandResponse;
 
@@ -18,30 +15,37 @@ public class GetFactureService {
 
     private static final Logger LOG = LogManager.getLogger(GetFactureService.class);
 
-    private GetFactureRepository getFactureRepository;
+    private static final String CLOSED = "CLOSED";
 
-    private DateTimeFormatter formatter = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            .withZone(ZoneId.of("UTC"));
+    private GetFactureRepository getFactureRepository;
 
     public GetFactureService(GetFactureRepository getFactureRepository) {
         this.getFactureRepository = getFactureRepository;
     }
 
-    public CommandResponse handleInput(IotEventRequest iotEventRequest) {
-        LOG.info("Got event: {}", iotEventRequest.getCurrent());
+    public List<CommandResponse> handleInput(IotEventRequest iotEventRequest) {
+        LOG.info("Got IOT event: {}", iotEventRequest.getCurrent());
 
-        // TODO 05. generate command (model.command) with date in utc format
-/*        Command command = Command.builder()
-                .setIdCommand(id.toString())
-                .setDateCommand(formatter.format(ZonedDateTime.now(ZoneOffset.UTC)))
-                .build();*/
+        // TODO 05. get the reported and desired 'BarStatus'
+        final String reportedBarStatus = getOrNull(() -> iotEventRequest.getCurrent().getState().getReported().getBarStatus());
+        final String desiredBarStatus = getOrNull(() -> iotEventRequest.getCurrent().getState().getDesired().getBarStatus());
 
-        // TODO 05. save command in dynamo
-        //return getFactureRepository.saveCommand(command);
-        return CommandResponse.builder()
-                .setIdClient("user3")
-                .build();
+        if (reportedBarStatus != null
+                && reportedBarStatus.equals(desiredBarStatus)
+                && desiredBarStatus.equals(CLOSED)) {
+            // TODO 05. call the repo
+            return getFactureRepository.getCommands(iotEventRequest.getDeviceId());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    private String getOrNull(Supplier<String> f) {
+        try {
+            return f.get();
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
 }

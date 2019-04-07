@@ -1,5 +1,8 @@
 package com.bartender.model;
 
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+
+import java.util.Map;
 import java.util.Objects;
 
 public class CommandResponse {
@@ -7,6 +10,13 @@ public class CommandResponse {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    // TODO 05. Transform the DynamoDB response into a CommandResponse
+    public static CommandResponse from(String deviceId, Map<String, AttributeValue> result) {
+        return builder()
+                .setIdClient(deviceId)
+                .build();
     }
 
     public static class Builder {
