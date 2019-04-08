@@ -8,10 +8,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class GetFactureServiceShould implements JsonTools {
 
@@ -24,23 +24,27 @@ class GetFactureServiceShould implements JsonTools {
         final IotShadowState shadowState = new IotShadowState()
                 .setDesired(new ClientObjectState().setBarStatus(IotShadowState.CLOSED))
                 .setReported(new ClientObjectState().setBarStatus(IotShadowState.CLOSED));
+
         IotEventRequest iotEventRequest = new IotEventRequest()
                 .setCurrent(new IotShadowDoc().setState(shadowState));
 
         final Command expectedResponse = Command.builder()
                 .setClient("123456")
                 .setFood(new Item()
-                        .setServed(false))
+                        .setServed(true))
                 .setBeer(new Item()
-                        .setServed(false))
+                        .setServed(true))
                 .build();
-        when(factureRepository.getCommands(any())).thenReturn(Collections.singletonList(expectedResponse));
+        // When
+        when(factureRepository.getCommands(any())).thenReturn(singletonList(expectedResponse));
         when(factureRepository.saveCommand(any())).thenReturn(expectedResponse);
 
-        // When
         final List<Command> response = factureService.handleInput(iotEventRequest);
 
         // Then
+        verify(factureRepository, times(1)).getCommands(any());
+        verify(factureRepository, times(1)).saveCommand(any());
+
         assertThat(response).hasSize(1);
         assertThat(response.get(0).getClient()).isEqualTo(expectedResponse.getClient());
         assertThat(response.get(0).getFood().isServed()).isTrue();

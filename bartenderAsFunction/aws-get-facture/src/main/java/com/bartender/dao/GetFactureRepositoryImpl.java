@@ -49,9 +49,7 @@ public class GetFactureRepositoryImpl implements GetFactureRepository {
                     .build();
 
             dynamoDB.putItem(request);
-            return Command.builder()
-                    //.setId(command.getClient())
-                    .build();
+            return command;
         }
     }
 

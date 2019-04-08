@@ -39,7 +39,7 @@ public class GetFactureService {
             // TODO 05. getCommands
             return getFactureRepository.getCommands(iotEventRequest.getDeviceId()).stream()
                     // TODO 05. update each command
-                    .map(command -> updateCommand(getFactureRepository.saveCommand(updateCommand(command))))
+                    .map(command -> getFactureRepository.saveCommand(updateCommand(command)))
                     .collect(toList());
         } else {
             return Collections.emptyList();
