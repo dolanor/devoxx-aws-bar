@@ -22,6 +22,18 @@ public class Item {
                 );
     }
 
+    // TODO 05, map the possible null parameter into an 'Item'
+    public static Item from(AttributeValue row) {
+        if (row != null) {
+            final Map<String, AttributeValue> rowData = row.m();
+            return new Item()
+                    .setItem(rowData.get("item").s())
+                    .setAmount(Integer.parseInt(rowData.get("amount").n())) // no validations for the time being
+                    .setServed(rowData.get("served").bool());
+        }
+        return null;
+    }
+
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
         map.put("item", AttributeValue.builder().s(this.getItem()).build());

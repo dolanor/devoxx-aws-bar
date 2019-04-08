@@ -1,10 +1,14 @@
 package com.bartender.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.*;
 
 public class Command {
+    private static final Logger LOG = LogManager.getLogger(Command.class);
+
     private String id;
     private String dateCommand;
     private Item beer;
@@ -26,6 +30,9 @@ public class Command {
         Optional.ofNullable(this.getClient()).ifPresent(value ->
                 map.put("client", AttributeValue.builder().s(value).build())
         );
+        Optional.ofNullable(food).ifPresent(actualFood ->
+                map.put("food", AttributeValue.builder().m(actualFood.marshal()).build())
+        );
         Optional.ofNullable(beer).ifPresent(actualBeer ->
                 map.put("beer", AttributeValue.builder().m(actualBeer.marshal()).build())
         );
@@ -33,7 +40,12 @@ public class Command {
     }
 
     public static Command from(String deviceId, Map<String, AttributeValue> result) {
+        LOG.info("Transforming command {}", result);
         return builder()
+                .setId(result.get("id").s())
+                .setDateCommand(result.get("date").s())
+                .setFood(Item.from(result.get("food")))
+                .setBeer(Item.from(result.get("beer")))
                 .setClient(deviceId)
                 .build();
     }
