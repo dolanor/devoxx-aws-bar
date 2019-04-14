@@ -121,7 +121,7 @@ Resources:
       Runtime: go1.x
       Handler: bin/getFacture
       Policies:
-      - DynamoDBReadPolicy:
+      - DynamoDBCrudPolicy:
           TableName: !Sub ${User}-Command
       Environment:
         Variables:
