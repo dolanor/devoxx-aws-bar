@@ -11,4 +11,4 @@ This workshop contains two main parts:
 
 ## What technologies this project involves
 
-We'll handle [IOT](https://aws.amazon.com/fr/iot/), [lambda](https://aws.amazon.com/fr/lambda/), RabitMQ, [DynamoDB](https://aws.amazon.com/fr/dynamodb/)
+We'll handle [IOT](https://aws.amazon.com/fr/iot/), [lambda](https://aws.amazon.com/fr/lambda/), MQTT, [DynamoDB](https://aws.amazon.com/fr/dynamodb/)
