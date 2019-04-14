@@ -13,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 var awsIot = require('aws-iot-device-sdk');
-var clientName = "USER2"
+
+var clientName = "user2" //TODO 04, replace this with your own id
 
 function processTest() {
     console.log("creating processing of shadow")
@@ -27,14 +28,12 @@ function processTest() {
         keyPath: './mything-private.pem.key',
         certPath: "./mything-certificate.pem.crt",
         caPath: "./AmazonRootCA1.pem",
-        //TODO change
         clientId: clientName,
-        //TODO change
-        host: "HOST",
+        host: "_NOT_A_REAL_URL_", //TODO 04, change to the real IoT URL
         region: "eu-west-1",
     });
     //
-    // Register a thing name and listen for deltas.  Whatever we receive on delta
+    // Register a thing name and listen for deltas. Whatever we receive on delta
     // is echoed via thing shadow updates.
     //
     thingShadows.register(clientName, {
@@ -63,7 +62,7 @@ function processTest() {
         });
 }
 
-processTest();
+// processTest(); // TODO 04, uncomment this line
 
 app.listen(8080, function() {
     console.log('listening on 8080')

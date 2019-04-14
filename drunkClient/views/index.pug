@@ -2,20 +2,35 @@ extends layout
 
 block content
   h1= title
-  #addCommand
-    fieldset
-      label(for='inputFoodCommand') I want:
-      br
-      input#inputFoodQty(type='number', placeholder='foodQuantity')
-      input#inputFoodCommand(type='string', placeholder='foodName')
-      br
-      input#inputBeerQty(type='number', placeholder='beerQuantity')
-      input#inputBeerCommand(type='string', placeholder='beerName')
-      br
-      img.className#btnAddCommand(src="/images/button.jpeg")
-  #URLRegistry
-    fieldset
-      label(for='registrationUrl') URL for Registration:
-      input#registrationUrl(type='string', placeholder='http://')
-      br
-      button#btnRegisterToUrl Register to URL
+  div(class='container-fluid')
+    div(class='row')  
+      div(class='col')
+        #URLRegistry
+          div(class='form-group')
+            label(for='registrationUrl') First step:
+            input#registrationUrl(
+              type='text'
+              class='form-control'
+              placeholder='http://your-lambda-url.com'
+              aria-describedby='registrationUrlDesc'
+            )
+            small(
+              id='registrationUrlDesc'
+              class='form-text text-muted'
+            ) This is the url used to register this 'Thing'
+          button#btnRegisterToUrl(class='btn btn-primary') Register into
+          p
+          hr
+    div(class='row')
+      div(class='col')
+        #addCommand
+          fieldset
+            label(for='inputFoodCommand') Second step:
+            br
+            input#inputFoodQty(type='number', placeholder='Food quantity')
+            input#inputFoodCommand(type='string', placeholder='Food Name')
+            br
+            input#inputBeerQty(type='number', placeholder='Beer Quantity')
+            input#inputBeerCommand(type='string', placeholder='Beer Name')
+            p
+            button#btnAddCommand(class='btn btn-danger') Send commands
