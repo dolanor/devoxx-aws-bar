@@ -4,6 +4,7 @@ var awsIot = require('aws-iot-device-sdk');
 var axios = require("axios");
 const fs = require('fs');
 
+// TODO 01. Replace this value to your actual user
 const idThing = "user1"
 
 /*
@@ -38,6 +39,11 @@ router.post('/registerApi', function (req, res) {
       })
     }
 
+    /*
+     * TODO 01. Write the certificates in the disk.
+     * This is already done for you :D
+     * Nothing to do here!
+     */
     axios.post(url, {
         id: idThing
       })
