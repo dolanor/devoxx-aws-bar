@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 var awsIot = require('aws-iot-device-sdk');
 
-var clientName = "user2" //TODO 04, replace this with your own id
+var clientName = "user2" //TODO, replace this with your own id
 
 function processTest() {
     console.log("creating processing of shadow")
@@ -29,7 +29,7 @@ function processTest() {
         certPath: "./mything-certificate.pem.crt",
         caPath: "./AmazonRootCA1.pem",
         clientId: clientName,
-        host: "_NOT_A_REAL_URL_", //TODO 04, change to the real IoT URL
+        host: "_NOT_A_REAL_URL_", //TODO, change to the real IoT URL
         region: "eu-west-1",
     });
     //
@@ -62,7 +62,7 @@ function processTest() {
         });
 }
 
-// processTest(); // TODO 04, uncomment this line
+// processTest(); // TODO, uncomment this line
 
 app.listen(8080, function() {
     console.log('listening on 8080')
