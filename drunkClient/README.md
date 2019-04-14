@@ -20,7 +20,7 @@ We need to _register_ an IoT client, and get the certificates needed for subsequ
 
 ### Step 1
 
-> Execute the TODO in [aws-register-client](../bartenderASFunction/aws-register-client)
+> Execute the TODO in [aws-register-client](/bartenderASFunction/aws-register-client)
 
 Verify the method to register the device to aws.
   - Update the file `index.js`. Change the variable *idThing* to set a name you got assigned.
@@ -36,8 +36,8 @@ Verify the method to register the device to aws.
 
 ### Step 2
 
-> Execute the TODO in [aws-read-command-food](../bartenderASFunction/aws-read-command-food)
-> Execute the TODO in [aws-read-command-beer](../bartenderASFunction/aws-read-command-beer)
+> Execute the TODO in [aws-read-command-food](/bartenderASFunction/aws-read-command-food)
+> Execute the TODO in [aws-read-command-beer](/bartenderASFunction/aws-read-command-beer)
 
 Complete the information of the downloaded keys and call the *addCommand* method to send commands.
 
@@ -51,8 +51,8 @@ Complete the information of the downloaded keys and call the *addCommand* method
 
 ### Step 3
 
-> Execute the TODO in [aws-change-bar-status](../bartenderASFunction/aws-change-bar-status)
-> Execute the TODO in [aws-get-facture](../bartenderASFunction/aws-get-facture)
+> Execute the TODO in [aws-change-bar-status](/bartenderASFunction/aws-change-bar-status)
+> Execute the TODO in [aws-get-facture](/bartenderASFunction/aws-get-facture)
 
 Verify the information of the downloaded keys and call the *processTest* method to listen the
 delta in the IoT shadow
