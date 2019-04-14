@@ -24,8 +24,8 @@ public class ReadCommandFoodRepositoryImpl implements ReadCommandFoodRepository 
         try (DynamoDbClient dynamoDB = newConnection()) {
             LOG.info("About to write command: {} in {}", command.marshal(), tableName);
             PutItemRequest request =  PutItemRequest.builder()
-                    .item(command.marshal()) // TODO 02. marshall the command
-                    .tableName(tableName) // TODO 02. use the table name got as an ENV variable
+                    .item(command.marshal()) // TODO marshall the command
+                    .tableName(tableName) // TODO use the table name got as an ENV variable
                     .build();
             dynamoDB.putItem(request);
             return CommandResponse.builder()

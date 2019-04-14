@@ -14,7 +14,7 @@ public class ShadowState {
     }
 
     public Optional<SdkBytes> buildPayload() {
-        // TODO 04, call SdkBytes.fromUtf8String after serializing the 'ShadowState'
+        // TODO call SdkBytes.fromUtf8String after serializing the 'ShadowState'
         return Json.serializer().toJson(this)
                 .map(SdkBytes::fromUtf8String);
     }

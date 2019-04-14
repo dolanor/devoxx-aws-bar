@@ -28,18 +28,18 @@ public class ReadCommandBeerService {
     }
 
     public CommandResponse handleInput(CommandRequest commandRequest) {
-        // TODO 03. generate id to the command (uuid)
+        // TODO generate id to the command (uuid)
         UUID id = UUID.randomUUID();
         LOG.info("Got: {}", commandRequest);
 
-        // TODO 03. generate command (model.command) with date in utc format
+        // TODO generate command (model.command) with date in utc format
         Command command = Command.builder()
                 .setIdCommand(id.toString())
                 .setDateCommand(formatter.format(ZonedDateTime.now(ZoneOffset.UTC)))
                 .setBeer(commandRequest.getBeer())
                 .build();
 
-        // TODO 03. save command in dynamo
+        // TODO save command in dynamo
         return readCommandBeerRepository.saveCommand(command);
     }
 

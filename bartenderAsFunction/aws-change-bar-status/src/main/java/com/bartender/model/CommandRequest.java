@@ -21,7 +21,7 @@ public class CommandRequest {
         final Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         final Matcher matcher = pattern.matcher(path);
 
-        // TODO 04, if the pattern matches, return the group 1
+        // TODO if the pattern matches, return the group 1
         return (matcher.find())
             ? Optional.of(new CommandRequest(matcher.group(1)))
             : Optional.empty();

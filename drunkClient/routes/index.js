@@ -80,17 +80,17 @@ router.post('/addCommand', function (req, res) {
     var data = req.body
     console.log("==== Calling /addCommand", data)
 
-    // TODO 02. Name the topic according to sam.yml
+    // TODO Name the topic according to sam.yml
     const topicName = `topics/${idThing}/topic_drunk`
 
     try {
-      //TODO 02. specify the certificates you just downloaded
+      //TODO specify the certificates you just downloaded
       const device = awsIot.device({
           keyPath: './mything-private.pem.key',
           certPath: "./mything-certificate.pem.crt",
           caPath: "./AmazonRootCA1.pem",
           clientId: idThing,
-          //TODO 02. Specify the MQTT url (AWS console / AWS iot / settings / Endpoint)
+          //TODO Specify the MQTT url (AWS console / AWS iot / settings / Endpoint)
           host: "_NOT_A_REAL_URL_"
       });
 

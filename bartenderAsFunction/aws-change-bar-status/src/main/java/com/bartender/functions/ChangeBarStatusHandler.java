@@ -26,7 +26,7 @@ public class ChangeBarStatusHandler implements RequestHandler<Map<String, Object
         LOG.info("received change bar status: {}", commandRequest);
 
         try {
-            // TODO 04, get the attribute 'path' and build a CommandRequest 'from' the value
+            // TODO get the attribute 'path' and build a CommandRequest 'from' the value
             final CommandRequest request = Optional.ofNullable(commandRequest.get("path"))
                     .map(Object::toString)
                     .flatMap(CommandRequest::from)

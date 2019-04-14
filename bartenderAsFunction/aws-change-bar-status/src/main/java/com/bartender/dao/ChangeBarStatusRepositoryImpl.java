@@ -25,18 +25,18 @@ public class ChangeBarStatusRepositoryImpl implements ChangeBarStatusRepository 
         try (IotDataPlaneClient client = newClient()) {
             LOG.info("Building the shadow request for thing: {}", commandRequest.getUserId());
 
-            // TODO 04, create a new 'Closed ShadowState' and set the 'payload' to the builder
+            // TODO create a new 'Closed ShadowState' and set the 'payload' to the builder
             final SdkBytes sdkBytes = ShadowState.Closed().buildPayload()
                     .orElseThrow(() -> new IllegalStateException("Impossible to generate ShadowRequest"));
 
-            // TODO 04, create a new UpdateThingShadowRequest with a 'thingName'
+            // TODO create a new UpdateThingShadowRequest with a 'thingName'
             final UpdateThingShadowRequest request = UpdateThingShadowRequest.builder()
                     .thingName(commandRequest.getUserId())
                     .payload(sdkBytes)
                     .build();
 
             LOG.info("Executing the shadow request: {}", Json.serializer().toJson(ShadowState.Closed()).orElse("?"));
-            // TODO 04, 'updateThingShadow'
+            // TODO 'updateThingShadow'
             final UpdateThingShadowResponse response = client.updateThingShadow(request);
 
             return CommandResponse.builder()
@@ -46,7 +46,7 @@ public class ChangeBarStatusRepositoryImpl implements ChangeBarStatusRepository 
         }
     }
 
-    // TODO 04. create a new client
+    // TODO create a new client
     private IotDataPlaneClient newClient() {
         return IotDataPlaneClient.builder()
                 .region(Region.EU_WEST_1)

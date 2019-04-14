@@ -10,7 +10,7 @@ For Java
 
 TODO
 
-### TODO 04 - Is it time to close the bar! (Change Bar Status)
+### Is it time to close the bar! (Change Bar Status)
 
 You need to trigger the service using the lambda URL!
 

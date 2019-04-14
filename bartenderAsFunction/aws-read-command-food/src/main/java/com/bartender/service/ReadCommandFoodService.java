@@ -28,18 +28,18 @@ public class ReadCommandFoodService {
     }
 
     public CommandResponse handleInput(CommandRequest commandRequest) {
-        // TODO 02. generate id to the command (uuid)
+        // TODO generate id to the command (uuid)
         UUID id = UUID.randomUUID();
         LOG.info("Got: {}", commandRequest);
 
-        // TODO 02. generate command (model.command) with date in utc format
+        // TODO generate command (model.command) with date in utc format
         Command command = Command.builder()
                 .setIdCommand(id.toString())
                 .setDateCommand(formatter.format(ZonedDateTime.now(ZoneOffset.UTC)))
                 .setFood(commandRequest.getFood())
                 .build();
 
-        // TODO 02. save command in dynamo
+        // TODO save command in dynamo
         return readCommandFoodRepository.saveCommand(command);
     }
 
