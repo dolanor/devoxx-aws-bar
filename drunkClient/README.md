@@ -20,34 +20,45 @@ We need to _register_ an IoT client, and get the certificates needed for subsequ
 
 ### Step 1
 
-Complete the methods to register the device to aws. Verify if everything is Ok in the Aws console
-  - Update the file index.js. Change the variable *idThing* to set a name you like
-  - Update the function for the endpoint `/registerApi`, to complete the request to the entered endpoint and write the information of the returned certificates in the files :
+> Execute the TODO in [register-client](/bartenderAsFunction/functions/registerClient)
+
+Verify the method to register the device to aws.
+  - Update the file `index.js`. Change the variable *idThing* to set a name you got assigned.
+  - Verify the function for the endpoint `/registerApi`, to complete the request to the entered endpoint and write the information of the returned certificates in the files :
     - `mything-certificate.pem.crt`
     - `mything-private.pem.key`
     - `mything-public.pem.key`
-  - To know the name of the variables for the request response, ask for the api definition of the returning objects
-  - Look in ApiGateway for the endpoint of the registration api, and use it
+  - To know the name of the variables for the request response, ask for the api definition of the returning objects.
+  - Start the web application using `npm start`.
+  - Look in ApiGateway for the endpoint of the registration api, set it in the *web interface* and click the register button.
   - Verify in the aws console that *the thing* with the name you provided in the `idThing` variable exists, and that it has associated a certificate and a policy.
+  - Verify that locally you now have several certificates.
 
 ### Step 2
+
+> Execute the TODO in [aws-read-command-food](/bartenderAsFunction/functions/readCommandFood)
+> Execute the TODO in [aws-read-command-beer](/bartenderAsFunction/functions/readCommandBeer)
 
 Complete the information of the downloaded keys and call the *addCommand* method to send commands.
 
  - Go to the file `index.js`
  - Look for the implementation of the endpoint *addCommand* (post)
- - Change the value of for *keyPath*, *certPath*, *caPath*. set the name of the file you have used in the step 2 to save the certificates.
- - Change the value of for *host*. Look for it in the Aws IoT console, in *thing*-*Interact*.
- - Publish the message to the topic topics/+/topic_drunk (see the [sdk documentation](https://github.com/aws/aws-iot-device-sdk-js)
- - Send beer and food commands
+ - Verify the values of for *keyPath*, *certPath*, *caPath*. Those names must match the files saved from *Step 1*.
+ - Change the value of *host*. Look for it in the Aws IoT console, in *thing*-*Interact*.
+ - Verify that the message MQTT message gets publised to the topic `topics/{idClient}/topic_drunk`. See the [sdk documentation](https://github.com/aws/aws-iot-device-sdk-js)
+ - Init the application using `npm start`.
+ - Send beer and food commands (using the drink client web application).
 
 ### Step 3
 
-Complete the information of the downloaded keys and call the *processTest* method to listen the
+> Execute the TODO in [aws-change-bar-status](/bartenderAsFunction/functions/changeBarStatus)
+> Execute the TODO in [aws-get-facture](/bartenderAsFunction/functions/getFacture)
+
+Verify the information of the downloaded keys and call the *processTest* method to listen the
 delta in the IoT shadow
   - Go to the file `server.js`
-  - Modify the variable `clientName` and set the name you used for *idThing* in *step2*
-  - Modify the method `processTest`. Change the value of for *keyPath*, *certPath*, *caPath*. set the name of the file you have used in the step 2 to save the certificates.
+  - Modify the variable `clientName` and set the name you used for *idThing* in *Step 1*
+  - Verify the method `processTest`. Look for the values *keyPath*, *certPath*, *caPath*
   - Modify the method `processTest`. Change the value of for *host*. Look for it in the _Aws IoT console_, in *thing*-*Interact*.
   - Verify the *region*
-  - Call the method `processTest` in the code. Restart the application. (For more information see the [sdk documentation](https://github.com/aws/aws-iot-device-sdk-js)
+  - Uncomment the call to the method `processTest`. Restart the application. For more information see the [sdk documentation](https://github.com/aws/aws-iot-device-sdk-js).
