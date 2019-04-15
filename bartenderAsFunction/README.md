@@ -18,13 +18,13 @@ I give you also the structure of the *waiter* project. It includes the *aws-sam*
 
 * go > 1.11 
 * [sam local](https://github.com/awslabs/aws-sam-cli)
-* a profile "epf" for aws-cli with your aws credentials
+* a profile "xebia" for aws-cli with your aws credentials
 
 ### Creating a profile for aws cli
 
 Go to your security credentials in your aws console, and create an access key. Copy your aws_access_key_id
 and your aws_secret_access_key  and  create your ~/.aws/credentials and  ~/.aws/config files as stated in this instructions: https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
-Your profile should be called *epf* (or modify the provided scripts to use the name of the profile you want to use).
+Your profile should be called *xebia* (or modify the provided scripts to use the name of the profile you want to use).
 
 ## The exercise 
 
