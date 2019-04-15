@@ -19,10 +19,63 @@ Go to your security credentials in your aws console, and create an access key. C
 and your *aws_secret_access_key*  and  create your ~/.aws/credentials and  ~/.aws/config files as stated in this instructions: https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
 Your profile should be called *epf* (or modify the provided scripts to use the name of the profile you want to use).
 
+
 ## The exercise
 
-Even if the general goal is the same, the individual steps depends on your development platform.
+### Clone the project
 
-* Follow [this link](README-Go.md) if you want to use Go.
+```
+$ git clone https://github.com/fagossa/devoxx-aws-bar
+```
 
-* Follow [this link](README-Java.md) if you want to use Java.
+During this exercise, if you have any question, you can go to the [faq](FAQ.md).
+
+![the exercise](https://docs.google.com/drawings/d/e/2PACX-1vQo9d9tz8Mm0s_NxGLRni0yA6V7r6YDlaJtOHQLblMqXi9jWjkIfv-v8L0eHsnF_XSIbTK2Yg7tecY0/pub?w=480&h=360)
+
+
+### Step 1
+The client is an IOT device who is going to send a command.
+As waiter you have to:
+* Announce where is the client going to register
+* Allow clients to register to the IoT Platform
+
+Don't worry, I've coded the client for you.
+
+Go to the `aws-register-client` lambda (this is a maven project). Resolve all the
+_TODOs_ and make all the test *green*. Now, edit the `sam.yml` file and uncomment
+the deployment configuration for this lambda.
+
+> sam.yml explains the configuration for all your resources: triggers, memmory, etc
+
+Build and deploy your first lambda!
+
+----------
+
+### Step 2
+When the client send a command, as waiter you have to:
+* Listen to those messages
+* Serve the commands.
+
+----------
+
+### Step 3
+The client is very drunk. As a waiter you are going to close the bar for him (no more service)
+As waiter you should:
+
+
+----------
+
+
+### Is it time to close the bar! (Change Bar Status)
+
+You need to trigger the service using the lambda URL!
+
+```
+curl -d "param1=test" -X POST https://{APY_GATEWAY_LAMBDA_URL}.eu-west-1.amazonaws.com/Stage/client/{userId}/close
+```
+
+Go to `/drunkClient/server.js` and uncomment the line `processTest();`
+
+----------
+
+Deploy your solution and enjoy!!!

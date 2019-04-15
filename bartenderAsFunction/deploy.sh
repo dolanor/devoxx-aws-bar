@@ -10,7 +10,7 @@ aws cloudformation package \
   --template-file ./sam.yml \
   --s3-bucket handsonbartender \
   --output-template-file ./packaged.yml \
-  --profile epf
+  --profile xebia
 
 ## we omit https://docs.aws.amazon.com/cli/latest/reference/cloudformation/package.html and we do it by hand
 ## because it is more convenient for the workshop
@@ -22,6 +22,6 @@ aws cloudformation deploy \
   --parameter-overrides User=$P_USER \
   --capabilities CAPABILITY_IAM \
   --region eu-west-1 \
-  --profile epf
+  --profile xebia
 
 # rm bin/*.jar

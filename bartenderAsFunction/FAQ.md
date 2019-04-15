@@ -17,3 +17,11 @@ $ mvn install
 ```
 
 The *jar* file, will be generated in the `/bartenderAsFunction/bin` directory.
+
+## How to deploy
+
+If you want to run all test:
+
+```
+$ ./deploy.sh {YOUR_USER}
+```
