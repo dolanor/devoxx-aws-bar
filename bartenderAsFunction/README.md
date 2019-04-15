@@ -56,11 +56,16 @@ When the client send a command, as waiter you have to:
 * Listen to those messages
 * Serve the commands
 
-Go to the `aws-read-command-food` lambda. Resolve all the _TODOs_ and make all
-the test *green*. Now, edit the `sam.yml` file and uncomment the deployment
-configuration for this lambda. Deploy it.
+Go to the `aws-read-command-food` folder. Resolve all the _TODOs_ and make all
+the test *green*. Follow the same steps for `aws-read-command-beer`.
 
-Follow the same steps for `aws-read-command-beer`.
+Go to the `sam.yml` file and create/verify the lambdas *LambdaRuleReadCommandBeer*,
+*LambdaRuleReadCommandFood* for the files you've just modified.
+
+Associate 2 rules to send the message to be treated by the right lambda. If it is a command with food, send the message to the food lambda, if it is a command wit beer, send it to the beer lambda. (you have to modify the `sam.yml` file, see [the AWS documentation](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html) for more information)
+see [Aws documentation](https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html) for more information
+
+Deploy.
 
 ----------
 
