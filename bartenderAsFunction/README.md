@@ -74,31 +74,22 @@ The client is very drunk. As a waiter you are going to close the bar for him (no
 
 * *Know* the status of the client (you should use the shadow for that)
 * Change the property `barStatus` of the shadow of the client to "CLOSED" (LambdaStatusBar)
-* Verify that the client does not send more information and clean all commands (pass them to "served", for this point you should see the file `sam.yml` to get the event from the shadow update and LambdaGetFacture)
+* Verify that the client does not send more information and clean all commands (pass them to "served", for this point you should see the file `sam.yml` to get the event from the shadow update and *LambdaGetFacture*)
 
-1. Go to the folder `aws-change-bar-status`. Complete the *TODOs* and make the tests in green.
-* This is an Api that allows you to change the shadow of the client to prevent to receive more commands. Modify the file `sam.yml` to enable the lambda *LambdaBarStatus* and the endpoint */client/{idClient}/close* in the swagger section.
+1. Go to the folder `aws-change-bar-status`. Complete the *TODOs* and make the tests green.
+* This is an API that allows you to change the shadow of the client to prevent to receive more commands. Modify the file `sam.yml` to enable the lambda *LambdaBarStatus* and the endpoint */client/{idClient}/close* in the swagger section.
+
+Once deployed you could trigger it like this:
+```
+curl -d "param1=test" -X POST https://{APY_GATEWAY_LAMBDA_URL}.eu-west-1.amazonaws.com/Stage/client/{idClient}/close
+```
 
 2. Go to the folder `aws-get-facture`. This lambda is going to get the bill for the client, when we get the confirmation of the shadow update.
 *  Complete the *TODOs* and make the tests green.
   * Read the commands of the client, close them and save the new status in the database.
 * Modify the `sam.yml` file to enable the lambda function *LambdaGetFacture* use as event a rule over the update of the shadow. For more information see [the aws documentation](https://docs.aws.amazon.com/iot/latest/developerguide/using-device-shadows.html).
 
-
-To know more about aws shadow and how to update the thing, see the aws documentation
-----------
-
-
-### Is it time to close the bar! (Change Bar Status)
-
-You need to trigger the service using the lambda URL!
-
-```
-curl -d "param1=test" -X POST https://{APY_GATEWAY_LAMBDA_URL}.eu-west-1.amazonaws.com/Stage/client/{userId}/close
-```
-
-Go to `/drunkClient/server.js` and uncomment the line `processTest();`
-
+To know more about aws shadow and how to update the thing, see the [aws documentation](https://docs.aws.amazon.com/iot/latest/developerguide/device-shadow-mqtt.html).
 ----------
 
 Deploy your solution and enjoy!!!
