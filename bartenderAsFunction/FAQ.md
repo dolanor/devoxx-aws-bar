@@ -1,50 +1,19 @@
-# Tips and Tricks 
+# Tips and Tricks
 
 ## How to run tests
 
-If you want to run all test: 
+If you want to run all test:
 
 ```
-$ go test ./...
-
+$ mvn test
 ```
 
-if you want to run a particular test:
+## How to generate the binary for a particular lambda
+
+Go to the lambda folder, and then run
 
 ```
-$ go test bartenderAsFunction/functions/FUNCTION_FOLDER/FILE -run TESTNAME
-
+$ mvn install
 ```
 
-example:
-
-```
-$ go test bartenderAsFunction/functions/getCommand/ -run TestHandlerShouldReturn404
-
-```
-
-if you want to clean cache for tests:
-
-```
-$ go clean -testcache
-
-```
-
-to build 
-
-```
-$ ./build.sh foldername
-
-```
-
-test with sam local
-
-```
-$ sam local start-api --template sam.yml
-```
-
-to deploy: create profile epf and:
-
-```
-$ ./deploy.sh USER
-```
+The *jar* file, will be generated in the `/bartenderAsFunction/bin` directory.
