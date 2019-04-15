@@ -89,6 +89,11 @@ in the swagger file.
     * Read the commands of the client, close them and save the new status in the database.
 * Modify the sam.yml file to enable the lambda function *LambdaGetFacture* use as event a rule over the update of the shadow. For more information see [the aws documentation](https://docs.aws.amazon.com/iot/latest/developerguide/using-device-shadows.html)
 
+* deploy and test with the command
+
+```
+curl -d "param1=test" -X POST https://{APY_GATEWAY_LAMBDA_URL}.eu-west-1.amazonaws.com/Stage/client/{idClient}/close
+```
 
 To know more about aws shadow and how to update the thing, see [the aws documentation](https://docs.aws.amazon.com/iot/latest/developerguide/device-shadow-mqtt.html)
 
