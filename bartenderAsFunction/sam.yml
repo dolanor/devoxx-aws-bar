@@ -100,27 +100,27 @@ Resources:
   #           RestApiId: !Ref Bartender
   #           Path: /client/{idClient}/close
   #           Method: POST
-  LambdaGetFacture:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: bin/get-facture.jar
-      Handler: com.bartender.functions.GetFactureHandler::handleRequest
-      Timeout: 10
-      Runtime: java8
-      MemorySize: 512
-      Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Sub ${User}-Command
-      Environment:
-        Variables:
-          TABLE_COMMANDS: !Sub ${User}-Command
-      Events:
-        EventCommandReception:
-          Type: IoTRule
-          Name: IotRuleCommandFactureGeneration
-          Properties:
-            AwsIotSqlVersion: "2016-03-23"
-            Sql: "SELECT *,topic(2) as client FROM  '$aws/things/+/shadow/update/documents'"
+  # LambdaGetFacture:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: bin/get-facture.jar
+  #     Handler: com.bartender.functions.GetFactureHandler::handleRequest
+  #     Timeout: 10
+  #     Runtime: java8
+  #     MemorySize: 512
+  #     Policies:
+  #     - DynamoDBCrudPolicy:
+  #         TableName: !Sub ${User}-Command
+  #     Environment:
+  #       Variables:
+  #         TABLE_COMMANDS: !Sub ${User}-Command
+  #     Events:
+  #       EventCommandReception:
+  #         Type: IoTRule
+  #         Name: IotRuleCommandFactureGeneration
+  #         Properties:
+  #           AwsIotSqlVersion: "2016-03-23"
+  #           Sql: "SELECT *,topic(2) as client FROM  '$aws/things/+/shadow/update/documents'"
   Bartender:
     Type: AWS::Serverless::Api
     Properties:
