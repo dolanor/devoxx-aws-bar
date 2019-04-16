@@ -52,30 +52,30 @@ Resources:
   #         Properties:
   #           AwsIotSqlVersion: "2016-03-23"
   #           Sql: "SELECT *,topic(2) as client FROM 'topics/+/topic_drunk' where food.amount > 0"
-  LambdaRuleReadCommandBeer:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: bin/read-command-beer.jar
-      Handler: com.bartender.functions.ReadCommandBeerHandler::handleRequest
-      Timeout: 13
-      Runtime: java8
-      MemorySize: 512
-      Policies:
-      - AWSIoTThingsRegistration
-      - AWSIoTConfigAccess
-      - AWSIoTDataAccess
-      - DynamoDBCrudPolicy:
-          TableName: !Sub ${User}-Command
-      Environment:
-        Variables:
-          TABLE_COMMANDS: !Sub ${User}-Command
-      Events:
-        EventCommandReception:
-          Type: IoTRule
-          Name: IotRuleCommandBeerReception
-          Properties:
-            AwsIotSqlVersion: "2016-03-23"
-            Sql: "SELECT *, topic(2) as client FROM 'topics/+/topic_drunk' where beer.amount > 0"
+  # LambdaRuleReadCommandBeer:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: bin/read-command-beer.jar
+  #     Handler: com.bartender.functions.ReadCommandBeerHandler::handleRequest
+  #     Timeout: 13
+  #     Runtime: java8
+  #     MemorySize: 512
+  #     Policies:
+  #     - AWSIoTThingsRegistration
+  #     - AWSIoTConfigAccess
+  #     - AWSIoTDataAccess
+  #     - DynamoDBCrudPolicy:
+  #         TableName: !Sub ${User}-Command
+  #     Environment:
+  #       Variables:
+  #         TABLE_COMMANDS: !Sub ${User}-Command
+  #     Events:
+  #       EventCommandReception:
+  #         Type: IoTRule
+  #         Name: IotRuleCommandBeerReception
+  #         Properties:
+  #           AwsIotSqlVersion: "2016-03-23"
+  #           Sql: "SELECT *, topic(2) as client FROM 'topics/+/topic_drunk' where beer.amount > 0"
   LambdaBarStatus:
     Type: AWS::Serverless::Function
     Properties:
