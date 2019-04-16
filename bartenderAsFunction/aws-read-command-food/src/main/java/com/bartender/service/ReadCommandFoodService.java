@@ -29,18 +29,19 @@ public class ReadCommandFoodService {
 
     public CommandResponse handleInput(CommandRequest commandRequest) {
         // TODO generate id to the command (uuid)
-        UUID id = UUID.randomUUID();
+        UUID id = null; /*UUID.randomUUID();*/
         LOG.info("Got: {}", commandRequest);
 
         // TODO generate command (model.command) with date in utc format
-        Command command = Command.builder()
+        Command command = null; /*Command.builder()
                 .setIdCommand(id.toString())
                 .setDateCommand(formatter.format(ZonedDateTime.now(ZoneOffset.UTC)))
                 .setFood(commandRequest.getFood())
-                .build();
+                .build();*/
 
         // TODO save command in dynamo
-        return readCommandFoodRepository.saveCommand(command);
+        /*return readCommandFoodRepository.saveCommand(command);*/
+        return null;
     }
 
 }

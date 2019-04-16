@@ -24,10 +24,11 @@ public class ReadCommandFoodRepositoryImpl implements ReadCommandFoodRepository 
         try (DynamoDbClient dynamoDB = newConnection()) {
             LOG.info("About to write command: {} in {}", command.marshal(), tableName);
             PutItemRequest request =  PutItemRequest.builder()
-                    .item(command.marshal()) // TODO marshall the command
-                    .tableName(tableName) // TODO use the table name got as an ENV variable
+                    /*.item(command.marshal())*/ // TODO marshall the command
+                    /*.tableName(tableName)*/ // TODO use the table name got as an ENV variable
                     .build();
-            dynamoDB.putItem(request);
+            // TODO: insert the record into the dynamo table
+            /*dynamoDB.putItem(request);*/
             return CommandResponse.builder()
                     .setIdClient(command.getClient())
                     .build();
@@ -35,8 +36,10 @@ public class ReadCommandFoodRepositoryImpl implements ReadCommandFoodRepository 
     }
 
     private DynamoDbClient newConnection() {
-        return DynamoDbClient.builder()
+        // TODO: uncomment dynamodb connection
+        /*return DynamoDbClient.builder()
                 .region(Region.EU_WEST_1)
-                .build();
+                .build();*/
+        return null;
     }
 }
