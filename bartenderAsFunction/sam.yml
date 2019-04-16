@@ -9,26 +9,26 @@ Parameters:
     Type: String
     Default: handsonbartender
 Resources:
-  LambdaRegisterClient:
-    Type: AWS::Serverless::Function
-    Properties:
-      Timeout: 10
-      Runtime: go1.x
-      Handler: bin/registerClient
-      Policies:
-      - AWSIoTThingsRegistration
-      - AWSIoTConfigAccess
-      - AWSIoTDataAccess
-      Events:
-        CommandsGet:
-          Type: Api
-          Properties:
-            RestApiId: !Ref Bartender
-            Path: /client
-            Method: POST
-      Environment:
-        Variables:
-          POLICY_DRUNK_CLIENT: !Ref PolicyDrunkClient
+  # LambdaRegisterClient:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Timeout: 10
+  #     Runtime: go1.x
+  #     Handler: bin/registerClient
+  #     Policies:
+  #     - AWSIoTThingsRegistration
+  #     - AWSIoTConfigAccess
+  #     - AWSIoTDataAccess
+  #     Events:
+  #       CommandsGet:
+  #         Type: Api
+  #         Properties:
+  #           RestApiId: !Ref Bartender
+  #           Path: /client
+  #           Method: POST
+  #     Environment:
+  #       Variables:
+  #         POLICY_DRUNK_CLIENT: !Ref PolicyDrunkClient
   LambdaRuleReadCommandBeer:
     Type: AWS::Serverless::Function
     Properties:
