@@ -15,8 +15,8 @@ public class ShadowState {
 
     public Optional<SdkBytes> buildPayload() {
         // TODO call SdkBytes.fromUtf8String after serializing the 'ShadowState'
-        return Json.serializer().toJson(this)
-                .map(SdkBytes::fromUtf8String);
+        return null; /*Json.serializer().toJson(this)
+                .map(SdkBytes::fromUtf8String);*/
     }
 
     public static class BarState {

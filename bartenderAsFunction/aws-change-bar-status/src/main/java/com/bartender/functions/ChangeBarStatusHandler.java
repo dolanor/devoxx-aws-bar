@@ -27,10 +27,10 @@ public class ChangeBarStatusHandler implements RequestHandler<Map<String, Object
 
         try {
             // TODO get the attribute 'path' and build a CommandRequest 'from' the value
-            final CommandRequest request = Optional.ofNullable(commandRequest.get("path"))
+            final CommandRequest request = null; /*Optional.ofNullable(commandRequest.get("path"))
                     .map(Object::toString)
                     .flatMap(CommandRequest::from)
-                    .orElseThrow(IllegalArgumentException::new);
+                    .orElseThrow(IllegalArgumentException::new);*/
 
             CommandResponse commandResponse = service.handleInput(request);
             return ApiGatewayResponse.builder()
