@@ -21,7 +21,8 @@ public class Command {
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        Optional.ofNullable(this.getId()).ifPresent(value ->
+        // TODO: uncomment this line
+        /*Optional.ofNullable(this.getId()).ifPresent(value ->
                 map.put("id", AttributeValue.builder().s(value).build())
          );
         Optional.ofNullable(this.getDateCommand()).ifPresent(value ->
@@ -35,7 +36,7 @@ public class Command {
         );
         Optional.ofNullable(beer).ifPresent(actualBeer ->
                 map.put("beer", AttributeValue.builder().m(actualBeer.marshal()).build())
-        );
+        );*/
         return map;
     }
 

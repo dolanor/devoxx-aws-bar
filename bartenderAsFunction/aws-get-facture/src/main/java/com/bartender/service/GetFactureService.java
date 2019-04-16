@@ -29,41 +29,42 @@ public class GetFactureService {
     public List<Command> handleInput(IotEventRequest iotEventRequest) {
         LOG.info("Got IOT event: {}", iotEventRequest.getCurrent());
 
-        // TODO 05. get the reported and desired 'BarStatus'
-        final String reportedBarStatus = getOrNull(() -> iotEventRequest.getCurrent().getState().getReported().getBarStatus());
-        final String desiredBarStatus = getOrNull(() -> iotEventRequest.getCurrent().getState().getDesired().getBarStatus());
+        // TODO get the reported and desired 'BarStatus'
+        final String reportedBarStatus = null; /*getOrNull(() -> iotEventRequest.getCurrent().getState().getReported().getBarStatus());*/
+        final String desiredBarStatus = null; /*getOrNull(() -> iotEventRequest.getCurrent().getState().getDesired().getBarStatus());*/
 
         if (reportedBarStatus != null
                 && reportedBarStatus.equals(desiredBarStatus)
                 && desiredBarStatus.equals(IotShadowState.CLOSED)) {
-            // TODO 05. getCommands
-            return getFactureRepository.getCommands(iotEventRequest.getDeviceId()).stream()
-                    // TODO 05. update each command
+            // TODO getCommands and persist them
+            /*return getFactureRepository.getCommands(iotEventRequest.getDeviceId()).stream()
                     .map(command -> getFactureRepository.saveCommand(updateCommand(command)))
-                    .collect(toList());
+                    .collect(toList());*/
+            return null;
         } else {
             return Collections.emptyList();
         }
     }
 
     private Command updateCommand(Command command) {
-        // TODO 05. mark the beer and food as 'served'
-        final Optional<Item> beer = Item
+        // TODO mark the beer and food as 'served'
+        final Optional<Item> beer = null; /*Item
                 .from(command.getBeer())
-                .map(item -> item.setServed(true));
+                .map(item -> item.setServed(true));*/
 
-        final Optional<Item> food = Item
+        final Optional<Item> food = null; /*Item
                 .from(command.getFood())
-                .map(item -> item.setServed(true));
+                .map(item -> item.setServed(true));*/
 
-        // TODO 05. build the command from the original command
-        return Command.builder()
+        // TODO build the command from the original command
+        /*return Command.builder()
                 .setClient(command.getClient())
                 .setDateCommand(command.getDateCommand())
                 .setBeer(beer.orElse(null))
                 .setFood(food.orElse(null))
                 .setId(command.getId())
-                .build();
+                .build();*/
+        return null;
     }
 
     private String getOrNull(Supplier<String> f) {

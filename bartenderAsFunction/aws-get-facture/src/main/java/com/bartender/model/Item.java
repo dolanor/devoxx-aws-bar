@@ -22,23 +22,24 @@ public class Item {
                 );
     }
 
-    // TODO 05, map the possible null parameter into an 'Item'
+    // TODO, map the possible null parameter into an 'Item'
     public static Item from(AttributeValue row) {
         if (row != null) {
-            final Map<String, AttributeValue> rowData = row.m();
+            /*final Map<String, AttributeValue> rowData = row.m();
             return new Item()
                     .setItem(rowData.get("item").s())
                     .setAmount(Integer.parseInt(rowData.get("amount").n())) // no validations for the time being
-                    .setServed(rowData.get("served").bool());
+                    .setServed(rowData.get("served").bool());*/
         }
         return null;
     }
 
     public Map<String, AttributeValue> marshal() {
         final HashMap<String, AttributeValue> map = new HashMap<>();
-        map.put("item", AttributeValue.builder().s(this.getItem()).build());
+        // TODO: uncomment this mapping
+        /*map.put("item", AttributeValue.builder().s(this.getItem()).build());
         map.put("amount", AttributeValue.builder().n(String.valueOf(this.getAmount())).build());
-        map.put("served", AttributeValue.builder().bool(this.isServed()).build());
+        map.put("served", AttributeValue.builder().bool(this.isServed()).build());*/
         return map;
     }
 

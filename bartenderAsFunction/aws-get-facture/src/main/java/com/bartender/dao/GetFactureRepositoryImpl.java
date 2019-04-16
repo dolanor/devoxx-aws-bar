@@ -28,13 +28,15 @@ public class GetFactureRepositoryImpl implements GetFactureRepository {
     public List<Command> getCommands(String deviceId) {
         try (DynamoDbClient dynamoDB = newConnection()) {
             ScanRequest request = ScanRequest.builder()
-                    .tableName(tableName) // TODO 05. use the table name got as an ENV variable
+                    /*.tableName(tableName)*/ // TODO use the table name got as an ENV variable
                     .build();
             final ScanResponse scan = dynamoDB.scan(request);
 
-            return scan.items().stream()
-                    .map(result -> Command.from(deviceId, result)) // TODO 05. call the CommandResponse::from
-                    .collect(toList());
+            // TODO call the CommandResponse::from
+            /*return scan.items().stream()
+                    .map(result -> Command.from(deviceId, result))
+                    .collect(toList());*/
+            return null;
         }
     }
 
@@ -44,8 +46,8 @@ public class GetFactureRepositoryImpl implements GetFactureRepository {
             LOG.info("About to write command: {} in {}", command.marshal(), tableName);
 
             PutItemRequest request =  PutItemRequest.builder()
-                    .item(command.marshal()) // TODO 05. marshall the command
-                    .tableName(tableName) // TODO 05. use the table name got as an ENV variable
+                    /*.item(command.marshal())*/ // TODO marshall the command
+                    /*.tableName(tableName)*/ // TODO use the table name got as an ENV variable
                     .build();
 
             dynamoDB.putItem(request);
