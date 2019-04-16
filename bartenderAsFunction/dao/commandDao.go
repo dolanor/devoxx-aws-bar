@@ -74,14 +74,17 @@ func (con *CommandConnection) GetCommandById(id string) model.Command {
 
 func (con *CommandConnection) SaveCommand(command model.Command) error {
 	tableName := os.Getenv("TABLE_COMMANDS")
-	av, err := dynamodbattribute.MarshalMap(command)
+	//TODO marshall command as dynamoattribute (see github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute)
+	//av, err := dynamodbattribute.MarshalMap(command)
+	err := fmt.Errorf("TO DELETE")
 	if err != nil {
 		fmt.Println(err)
 		return err
 	}
 	// Create item in table
+	//TODO put the marshalled command into the item to the request to dynamodb
 	input := &dynamodb.PutItemInput{
-		Item:      av,
+		Item:      nil,//av,
 		TableName: aws.String(tableName),
 	}
 	_, err = con.DynamoConnection.PutItem(input)

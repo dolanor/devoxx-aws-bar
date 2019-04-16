@@ -12,7 +12,7 @@ import (
 var DataConnectionManager dao.CommandConnectionInterface
 
 func Handler(iotRequest model.CommandRequest) error {
-	// TODO 1. generate id to the command (uuid)
+	// TODO 1. generate id to the command (uuid) (see uuid.NewV4)
 	uid:= uuid.NewV4()
 	fmt.Println("beer:", iotRequest.Beer)
 	// TODO 2. generate command (model.command) with date in utc format
@@ -23,6 +23,7 @@ func Handler(iotRequest model.CommandRequest) error {
 	if err != nil {
 		return err
 	}
+	// implement the should save command to get if a command has been  created in the las 2 minutes
 	if shouldSaveCommand(commands, time.Now()) {
 		saveCommandError := DataConnectionManager.SaveCommand(command)
 		if saveCommandError != nil {
@@ -33,17 +34,7 @@ func Handler(iotRequest model.CommandRequest) error {
 }
 
 func shouldSaveCommand(commands []model.Command, actualDate time.Time) bool {
-	for _, val := range commands {
-		if val.Beer.Amount >0  {
-				dateCommand, _ := time.Parse(time.RFC3339, val.DateCommand)
-				fmt.Println("dateCommand", dateCommand)
-				fmt.Println("actualDate", actualDate)
-				// 2 - minutes to hold
-				if dateCommand.Add(time.Second * 60 * 2).After(actualDate) {
-					return false
-			}
-		}
-	}
+	//TODO implement
 	return true
 }
 

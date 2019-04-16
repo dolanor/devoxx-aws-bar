@@ -74,18 +74,20 @@ func createLock(drunkClient model.DrunkClient, con *IotConnection) error {
 }
 
 func (con *IotConnection) UpdateShadow(idClient string, desiredStatus string) error {
-	input := iotdataplane.UpdateThingShadowInput{}
-	input.SetThingName(idClient)
 	var desiredShadow model.ClientObjectState
-
 	desiredShadow.BarStatus = desiredStatus
+
 	shadow := model.IotShadowDoc{
 		State: model.IotShadowState{
 			Desired: desiredShadow,
 		},
 	}
 	payload, _ := json.Marshal(shadow)
-	input.SetPayload(payload)
+	fmt.Println(payload)
+	//TODO create an object iotdataplane.UpdateThingShadowInput and set the thing name and the payload
+	input := iotdataplane.UpdateThingShadowInput{}
+	//input.SetThingName(idClient)
+	//input.SetPayload(payload)
 	iotShadowConn := initializeIotDataClient(con.Iot)
 	_, err := iotShadowConn.UpdateThingShadow(&input)
 	if err != nil {

@@ -9,8 +9,10 @@ import (
 var IotConnectionManager dao.IotConnectionInterface
 
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	idClient := request.PathParameters["idClient"]
+	//TODO get the pathParameter idClient
+	idClient := ""//request.PathParameters["paramether name"]
 	if idClient != "" {
+		//TODO implement the UpdateShadow method in  dao/iotDao.go 
 		errChangeStatus := IotConnectionManager.UpdateShadow(idClient, "CLOSED")
 		return events.APIGatewayProxyResponse{StatusCode: 200}, errChangeStatus
 	}
