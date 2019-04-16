@@ -26,7 +26,9 @@ public class RegisterClientService {
                 ? UUID.randomUUID().toString()
                 : drunkClient.getId();
 
-        return registerClientRepository.registerNewDevice(id);
+        // TODO: call the repository using the id
+        //return registerClientRepository.registerNewDevice(id);
+        return null;
     }
 
 }

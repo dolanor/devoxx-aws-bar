@@ -35,56 +35,67 @@ public class RegisterClientRepositoryImpl implements RegisterClientRepository {
 
     private DrunkClientResponse buildDrunkClientResponse(CreateKeysAndCertificateResponse createResult, String clientId) {
         LOG.info("buildDrunkClientResponse for client {}", clientId);
-        return DrunkClientResponse.builder()
+        // TODO: uncomment the response containing the certificates for this thing
+        /*return DrunkClientResponse.builder()
                 .setIdClient(clientId)
                 .setCertificateArn(createResult.certificateArn())
                 .setPublicKey(createResult.keyPair().publicKey())
                 .setPrivateKey(createResult.keyPair().privateKey())
                 .setCertificatePem(createResult.certificatePem())
-                .build();
+                .build();*/
+        return null;
     }
 
     public CreateKeysAndCertificateResponse createKeysAndCertificate(String clientId, IotClient client) {
         LOG.info("CreateKeysAndCertificate for client {}", clientId);
-        final CreateKeysAndCertificateRequest createReq =
+        // TODO: uncomment the request for keys and certificates
+        /*final CreateKeysAndCertificateRequest createReq =
                 CreateKeysAndCertificateRequest.builder()
                         .setAsActive(true)
                         .build();
-        return client.createKeysAndCertificate(createReq);
+        return client.createKeysAndCertificate(createReq);*/
+        return null;
     }
 
     public CreateThingResponse createThing(DrunkClientResponse response, IotClient client) {
         LOG.info("createThing for client {}", response.getIdClient());
-        final CreateThingRequest createThing = CreateThingRequest.builder()
+        // TODO: uncomment the create thing request
+        /*final CreateThingRequest createThing = CreateThingRequest.builder()
                 .thingName(response.getIdClient())
                 .build();
-        return client.createThing(createThing);
+        return client.createThing(createThing);*/
+        return null;
     }
 
     public AttachPolicyResponse attachPolicy(DrunkClientResponse response, IotClient client) {
         LOG.info("attachPolicy for client {}", response.getIdClient());
-        final AttachPolicyRequest request = AttachPolicyRequest.builder()
+        // TODO: uncomment the attach policy request
+        /*final AttachPolicyRequest request = AttachPolicyRequest.builder()
                 .policyName(policyDrunkClient)
                 .target(response.getCertificateArn())
                 .build();
-        return client.attachPolicy(request);
+        return client.attachPolicy(request);*/
+        return null;
     }
 
     public AttachThingPrincipalResponse attachThingPrincipal(DrunkClientResponse response, IotClient client) {
         LOG.info("attachThingPrincipal for client {}", response.getIdClient());
-        if (StringUtils.isNotBlank(response.getCertificateArn())) {
+        // TODO: uncomment the certificate attach
+        /*if (StringUtils.isNotBlank(response.getCertificateArn())) {
             final AttachThingPrincipalRequest request = AttachThingPrincipalRequest.builder()
                 .thingName(response.getIdClient())
                 .principal(response.getCertificateArn())
                 .build();
             return client.attachThingPrincipal(request);
-        }
+        }*/
         return null;
     }
 
     private IotClient newClient() {
-        return IotClient.builder()
+        // TODO: uncomment the connection to the iotclient
+        /*return IotClient.builder()
                 .region(Region.EU_WEST_1)
-                .build();
+                .build();*/
+        return null;
     }
 }

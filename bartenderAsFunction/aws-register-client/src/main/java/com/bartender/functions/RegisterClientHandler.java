@@ -20,7 +20,8 @@ public class RegisterClientHandler implements RequestHandler<ApiGatewayRequest, 
     public ApiGatewayResponse handleRequest(ApiGatewayRequest input, Context context) {
         LOG.info("received: {}", input);
         try {
-            DrunkClientRequest request = Json.instance().parse(input.getBody(), DrunkClientRequest.class);
+            // TODO: use the json deserializer to parse the body from the input
+            DrunkClientRequest request = null; //Json.instance().parse(/* get the body from input */, DrunkClientRequest.class);
             DrunkClientResponse drunkClientResponse = service.handleInput(request);
             return ApiGatewayResponse.builder()
                     .setStatusCode(200)
