@@ -17,21 +17,27 @@ I give you also the structure of the *waiter* project. It includes the *aws-sam*
 ## Before you start: Requirements
 
 * go > 1.11 
-* [sam local](https://github.com/awslabs/aws-sam-cli)
-* a profile "xebia" for aws-cli with your aws credentials
+* [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html#install-tool-bundled)
+* a profile "workshop" for aws-cli with your aws credentials
 
 ### Creating a profile for aws cli
 
 Go to your security credentials in your aws console, and create an access key. Copy your aws_access_key_id
 and your aws_secret_access_key  and  create your ~/.aws/credentials and  ~/.aws/config files as stated in this instructions: https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
-Your profile should be called *xebia* (or modify the provided scripts to use the name of the profile you want to use).
+Your profile should be called *workshop* (or modify the provided scripts to use the name of the profile you want to use).
 
 ## The exercise 
 
 Create the path to your go projects and clone the project.
 
 ```
-$ git clone https://github.com/dicaormu/bartenderAsFunction
+$ git clone git@github.com:fagossa/devoxx-aws-bar.git
+
+$ cd devoxx-aws-bar
+
+$ git checkout exercise-go
+
+$ cd bartenderAsFunction
 
 $ go mod init bartenderAsFunction
 ```
