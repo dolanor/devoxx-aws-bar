@@ -32,7 +32,10 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	//TODO 4 go to the IotConnectionManager in dao/iotDao.go and implement the method RegisterDevice
 	IotConnectionManager.RegisterDevice(&drunkClient)
 	//assign an Id to the device when it does not have
-	b, _ := json.Marshal(drunkClient)
+	b, err := json.Marshal(drunkClient)
+	if err != nil {
+		return events.APIGatewayProxyResponse{StatusCode: 500}, err
+	}
 	return events.APIGatewayProxyResponse{StatusCode: 200, Body: string(b)}, nil
 }
 

@@ -4,7 +4,7 @@ Description: AWS SAM template for bartender hands-on
 Parameters:
   User:
     Type: String
-    Default: userDevoxx
+    Default: _TODO_PUT_A_USERNAME_
   Bucket:
     Type: String
     Default: handsonbartender
